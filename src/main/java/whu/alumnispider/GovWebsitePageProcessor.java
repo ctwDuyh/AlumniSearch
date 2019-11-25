@@ -1,6 +1,5 @@
 package whu.alumnispider;
 
-import com.sun.org.apache.regexp.internal.RE;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
@@ -13,7 +12,6 @@ import whu.alumnispider.utilities.GovSubpage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,8 +20,8 @@ import java.util.regex.Pattern;
  */
 public class GovWebsitePageProcessor implements PageProcessor {
     private static String dataSetName = "GovWebsiteSet";
-    private static List<String> urls = new AlumniDAO().readFromGovWebsite(dataSetName, "url");
-    private static List<String> organizers = new AlumniDAO().readFromGovWebsite(dataSetName,"organizer");
+    private static List<String> urls = new AlumniDAO().read(dataSetName, "url");
+    private static List<String> organizers = new AlumniDAO().read(dataSetName,"organizer");
 
     // index represents the elements' index in database.
     private static int index = 0;

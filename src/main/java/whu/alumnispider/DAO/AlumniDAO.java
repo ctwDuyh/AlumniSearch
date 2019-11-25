@@ -23,7 +23,7 @@ public class AlumniDAO {
     }
 
     // read data in database.
-    public List<String> readFromGovWebsite(String tableName, String selectProperty) {
+    public List<String> read(String tableName, String selectProperty) {
         try {
             List<String> rets = new ArrayList<String>();
             String sql = "SELECT " + selectProperty +" FROM " + tableName;
@@ -80,11 +80,27 @@ public class AlumniDAO {
 
     public int add(College college, String tableName) {
         try {
-            String sql = "INSERT INTO `test`.`" + tableName + "`(`schoolname`, `website`)" + "VALUES (?, ?)";
+            String sql = "INSERT INTO `test`.`" + tableName + "`(`collegename`, `website`)" + "VALUES (?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setString(1, college.getName());
             preparedStatement.setString(2, college.getWebsite());
+
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public int add(School school, String tableName) {
+        try {
+            String sql = "INSERT INTO `test`.`" + tableName + "`(`schoolname`, `website`)" + "VALUES (?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, school.getName());
+            preparedStatement.setString(2, school.getWebsite());
 
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {

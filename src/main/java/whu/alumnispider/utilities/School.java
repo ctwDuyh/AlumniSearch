@@ -2,16 +2,16 @@ package whu.alumnispider.utilities;
 
 import java.util.Objects;
 
-public class College {
+public class School {
     private String name;
     private String website;
 
-    public College(String name, String website) {
+    public School(String name, String website) {
         this.name = name;
         this.website = website;
     }
 
-    public College() {
+    public School() {
     }
 
     public String getName() {
@@ -34,7 +34,7 @@ public class College {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        College college = (College) o;
+        School college = (School) o;
         return Objects.equals(website, college.website);
     }
 
