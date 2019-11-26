@@ -40,6 +40,28 @@ public class AlumniDAO {
 
         return null;
     }
+    // 获取学校和学校网址信息
+    public List<College> readFromColWebsite(String tableName) {
+        try {
+            List<College> colleges = new ArrayList<>();
+            String sql = "SELECT * FROM " + tableName;
+            ResultSet resultSet = stmt.executeQuery(sql);
+            College college = new College();
+            while (resultSet.next()) {
+                String schoolName = resultSet.getString("schoolname");
+                String website = resultSet.getString("website");
+                college.setName(schoolName);
+                college.setWebsite(website);
+                colleges.add(college);
+            }
+
+            return colleges;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        };
+
+        return null;
+    }
 
     // write data in database.
     public int add(Person person, String tableName) {
@@ -85,6 +107,22 @@ public class AlumniDAO {
 
             preparedStatement.setString(1, college.getName());
             preparedStatement.setString(2, college.getWebsite());
+
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public int add(Academy academy, String tableName) {
+        try {
+            String sql = "INSERT INTO `test`.`" + tableName + "`(`schoolname`, `academywebsite`)" + "VALUES (?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, academy.getSchoolName());
+            preparedStatement.setString(2, academy.getAcademyWebsite());
 
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {

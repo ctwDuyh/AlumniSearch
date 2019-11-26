@@ -11,20 +11,21 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://G:/webmagic" />
+          <root url="file://E:/实验室项目/校友会/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://G:/webmagic" recursive="false" />
+        <jarDirectory url="file://E:/实验室项目/校友会/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar!/" />
+          <root url="file://E:/实验室项目/校友会/5.1.6" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://E:/实验室项目/校友会/5.1.6" recursive="false" />
       </library>
     </orderEntry>
   </component>
