@@ -1,6 +1,7 @@
 package whu.alumnispider;
 
 import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -44,7 +45,8 @@ public class BaiduSearchProcessor implements PageProcessor {
             for(String tempPage : personPages){
                 if (!personHashSet.contains(tempPage)){
                     personHashSet.add(tempPage);
-                    page.addTargetRequests(personPages);
+                    Request request = new Request(tempPage);
+                    page.addTargetRequest(request);
                 }
             }
         }
