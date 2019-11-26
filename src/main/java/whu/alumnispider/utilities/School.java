@@ -35,7 +35,7 @@ public class School {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         School college = (School) o;
-        return Objects.equals(website, college.website);
+        return Objects.equals(website, college.website)||Objects.equals(website+"/", college.website)||Objects.equals(website, college.website+"/");
     }
 
     @Override

@@ -2,18 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8d33293-259f-40ad-aade-bdea10436364" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/School.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.sql" beforeDir="false" afterPath="$PROJECT_DIR$/database.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/CollegeWebsitePageProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/CollegeWebsitePageProcessor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/GovWebsitePageProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/GovWebsitePageProcessor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/utilities/College.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/utilities/College.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/College.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/College.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/School.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/School.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,30 +104,32 @@
     <session id="-1946606100">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.102" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="1" />
-          <entry key="java" value="10" />
+          <entry key="java" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="10" />
+          <entry key="JAVA" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="540" />
+          <entry key="java" value="988" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="539" />
+          <entry key="JAVA" value="987" />
           <entry key="SQL" value="1" />
         </counts>
       </usages-collector>
@@ -145,8 +140,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/CollegeWebsitePageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="76" column="36" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="36" />
+            <state relative-caret-position="455">
+              <caret line="49" column="24" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="132" column="82" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="82" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -154,8 +161,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="90" column="99" selection-start-line="90" selection-start-column="91" selection-end-line="90" selection-end-column="99" />
+            <state relative-caret-position="255">
+              <caret line="90" column="81" lean-forward="true" selection-start-line="90" selection-start-column="81" selection-end-line="90" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -166,13 +173,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="122" column="53" selection-start-line="122" selection-start-column="53" selection-end-line="122" selection-end-column="53" />
+            <state relative-caret-position="308">
+              <caret line="62" column="65" lean-forward="true" selection-start-line="62" selection-start-column="65" selection-end-line="62" selection-end-column="65" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1458#1466#0" expanded="true" />
-                <element signature="e#4011#4012#0" expanded="true" />
-                <element signature="e#4038#4039#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -181,8 +185,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="411">
-              <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
+            <state relative-caret-position="1540">
+              <caret line="112" column="37" lean-forward="true" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -193,7 +197,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/School.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-462" />
+            <state relative-caret-position="176">
+              <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+            </state>
           </provider>
         </entry>
       </file>
@@ -201,7 +207,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/GovSubpage.java">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="35" lean-forward="true" selection-start-column="35" selection-end-column="35" />
+              <caret column="35" selection-start-column="35" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -210,11 +216,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/College.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="176">
-              <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-              <folding>
-                <element signature="e#717#718#0" expanded="true" />
-                <element signature="e#761#762#0" expanded="true" />
-              </folding>
+              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -281,7 +283,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="950" />
     <option name="y" value="-10" />
     <option name="width" value="980" />
@@ -295,7 +297,6 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -356,6 +357,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -363,7 +365,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574674129576" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574674372715" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="ignore_missing_gitignore" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -461,6 +463,7 @@
     <configuration name="SchoolWebsitePageProcessor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="whu.alumnispider.SchoolWebsitePageProcessor" />
       <module name="code" />
+      <option name="VM_PARAMETERS" value="-Xms1024m -Xmx1024m" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="whu.alumnispider.*" />
@@ -473,6 +476,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.GovWebsitePageProcessor" />
+      <item itemvalue="Application.GithubRepoPageProcessor" />
       <item itemvalue="Application.ChuangshiPageProcessor" />
       <item itemvalue="Application.GovLeaderAlumniPageProcessor" />
       <item itemvalue="Application.LeaderAlumniPageProcessor" />
@@ -509,18 +513,18 @@
       <workItem from="1574320270963" duration="6694000" />
       <workItem from="1574404936912" duration="9263000" />
       <workItem from="1574647289327" duration="9148000" />
-      <workItem from="1574668804079" duration="5561000" />
+      <workItem from="1574668804079" duration="5902000" />
+      <workItem from="1574733268031" duration="5683000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30666000" />
+    <option name="totallyTimeSpent" value="36690000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49858356" visible="true" weight="0.24798928" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49858356" visible="true" weight="0.25134048" />
       <window_info id="Structure" order="1" sideWeight="0.50141644" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -529,8 +533,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.22521247" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.14022663" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39235127" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.30878186" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.33144477" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -538,7 +542,7 @@
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.3286119" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.41359773" />
       <window_info anchor="bottom" id="Database Console" order="12" weight="0.12322946" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -745,38 +749,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="132" column="82" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="82" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/GovSubpage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="35" lean-forward="true" selection-start-column="35" selection-end-column="35" />
+          <caret column="35" selection-start-column="35" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/College.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="8" column="14" lean-forward="true" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
-          <folding>
-            <element signature="e#717#718#0" expanded="true" />
-            <element signature="e#761#762#0" expanded="true" />
-          </folding>
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/School.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="90" column="99" selection-start-line="90" selection-start-column="91" selection-end-line="90" selection-end-column="99" />
+        <state relative-caret-position="176">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_172/src.zip!/java/sql/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="279" column="9" selection-start-line="279" selection-start-column="9" selection-end-line="279" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1540">
+          <caret line="112" column="37" lean-forward="true" selection-start-line="112" selection-start-column="37" selection-end-line="112" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -785,35 +789,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/CollegeWebsitePageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="76" column="36" selection-start-line="76" selection-start-column="36" selection-end-line="76" selection-end-column="36" />
+        <state relative-caret-position="455">
+          <caret line="49" column="24" selection-start-line="49" selection-start-column="12" selection-end-line="49" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
+        <state relative-caret-position="342">
+          <caret line="132" column="82" selection-start-line="132" selection-start-column="25" selection-end-line="132" selection-end-column="82" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/School.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-462" />
+        <state relative-caret-position="255">
+          <caret line="90" column="81" lean-forward="true" selection-start-line="90" selection-start-column="81" selection-end-line="90" selection-end-column="81" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="122" column="53" selection-start-line="122" selection-start-column="53" selection-end-line="122" selection-end-column="53" />
+        <state relative-caret-position="308">
+          <caret line="62" column="65" lean-forward="true" selection-start-line="62" selection-start-column="65" selection-end-line="62" selection-end-column="65" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1458#1466#0" expanded="true" />
-            <element signature="e#4011#4012#0" expanded="true" />
-            <element signature="e#4038#4039#0" expanded="true" />
           </folding>
         </state>
       </provider>

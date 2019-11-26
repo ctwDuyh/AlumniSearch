@@ -26,6 +26,8 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     // index represents the elements' index in database.
     private static int index = 0;
     private static int maxLevel = 3;
+    private static int sum1 = 0;
+    private static int sum2 = 0;
 
 
     private static String hrefRegex = "<a .*href=.+</a>";
@@ -58,6 +60,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
 
     @Override
     public void process(Page page) {
+        System.out.println(page.getRequest().getExtra("_level"));
         String processingUrl = page.getUrl().toString();
 
         Matcher matcher = hrefPattern.matcher(page.getHtml().toString());
@@ -88,6 +91,8 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
                     href = processingUrl + href.substring(1, href.length() - 1);
                 }
 
+                if(!href.contains("http") && !href.contains("www")) href = page.getRequest().getExtra("parent") + href;
+
                 School school = new School(page.getRequest().getExtra("_name").toString(), href);
                 if(!extras.contains(school))
                 {
@@ -100,9 +105,10 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
                     }
 
                     if (((Integer)page.getRequest().getExtra("_level") < maxLevel)) {
-                        Request request = new Request(school.getWebsite()).setPriority(2)
+                        Request request = new Request(school.getWebsite()).setPriority((Integer)page.getRequest().getExtra("_level")+2)
                                 .putExtra("_name", school.getName())
-                                .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1));
+                                .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1))
+                                .putExtra("parent", page.getRequest().getExtra("parent"));
                         page.addTargetRequest(request);
                     }
                 }
@@ -118,6 +124,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     public static void main(String[] args) {
         /*while(index < collegeUrls.size()) {
             String url = collegeUrls.get(index);
+            if(url.charAt(url.length()-1)!='/') url += "/"
             String name = collegeNames.get(index);
             School school = new School(name, url);
             new AlumniDAO().add(school, dataSetName);
@@ -133,10 +140,10 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
         School school = new School("武汉大学", "https://www.whu.edu.cn/");
         new AlumniDAO().add(school, dataSetName);
         extras.add(school);
-        Request request = new Request(school.getWebsite()).setPriority(1).putExtra("_level", 0).putExtra("_name", school.getName());
+        Request request = new Request(school.getWebsite()).setPriority(1).putExtra("_level", 0).putExtra("_name", school.getName()).putExtra("parent", school.getWebsite());
         Spider.create(new SchoolWebsitePageProcessor())
                 .addRequest(request)
-                .scheduler(new LevelLimitScheduler(3))
+                .scheduler(new LevelLimitScheduler(1))
                 .thread(1)
                 .run();
     }
