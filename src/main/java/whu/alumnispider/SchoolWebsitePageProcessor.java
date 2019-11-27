@@ -23,11 +23,11 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     private static List<String> collegeUrls = new AlumniDAO().read("college", "website");
     private static List<String> collegeNames = new AlumniDAO().read("college","collegename");
 
+    private static AlumniDAO alumniDAO = new AlumniDAO();
+
     // index represents the elements' index in database.
     private static int index = 0;
     private static int maxLevel = 3;
-    private static int sum1 = 0;
-    private static int sum2 = 0;
 
 
     private static String hrefRegex = "<a .*href=.+</a>";
@@ -54,14 +54,14 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             govSubpage.setOrganizer(page.getRequest().getExtra("Organizer").toString());
             govSubpage.setUrl(page.getUrl().toString());
 
-            new AlumniDAO().add(govSubpage, "extractedPages");
+            alumniDAO.add(govSubpage, "extractedPages");
         }
     }
 
     @Override
     public void process(Page page) {
-        System.out.println(page.getRequest().getExtra("_level"));
         String processingUrl = page.getUrl().toString();
+        System.out.println(page.getRequest().getExtra("_level") + ": " + processingUrl);
 
         Matcher matcher = hrefPattern.matcher(page.getHtml().toString());
         while (matcher.find()) {
@@ -84,7 +84,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             }
 
             // Delete the extracted empty href.
-            if (!href.equals("")) {
+            if (!href.equals("")&&!href.equals("#")&&!href.equals("")) {
                 if (href.charAt(0) == '.' && processingUrl.endsWith("/")) {
                     href = processingUrl + href.substring(2, href.length() - 1);
                 } else if (href.charAt(0) == '.') {
@@ -101,11 +101,11 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
                     Matcher schoolMatcher = schoolPattern.matcher(school.getWebsite());
                     if(schoolMatcher.find())
                     {
-                        new AlumniDAO().add(school,dataSetName);
+                        alumniDAO.add(school,dataSetName);
                     }
 
-                    if (((Integer)page.getRequest().getExtra("_level") < maxLevel)) {
-                        Request request = new Request(school.getWebsite()).setPriority((Integer)page.getRequest().getExtra("_level")+2)
+                    if (((Integer)page.getRequest().getExtra("_level") < maxLevel) && school.getWebsite().startsWith(page.getRequest().getExtra("parent").toString())) {
+                        Request request = new Request(school.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))
                                 .putExtra("_name", school.getName())
                                 .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1))
                                 .putExtra("parent", page.getRequest().getExtra("parent"));
@@ -122,29 +122,45 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        /*while(index < collegeUrls.size()) {
+        Request[] requests = new Request[2000];
+        for(int i = 0; i < 2000; i++)
+        {
+            requests[i] = new Request(" ");
+        }
+        while(index < collegeUrls.size()) {
+            System.out.println(index);
             String url = collegeUrls.get(index);
-            if(url.charAt(url.length()-1)!='/') url += "/"
+            if(url.charAt(url.length()-1)!='/') url += "/";
+
+            Matcher schoolMatcher = schoolPattern.matcher(url);
+            if(!schoolMatcher.find()) {
+                index++;
+                continue;
+            }
+
             String name = collegeNames.get(index);
             School school = new School(name, url);
-            new AlumniDAO().add(school, dataSetName);
+            alumniDAO.add(school, dataSetName);
             extras.add(school);
-            Request request = new Request(url).setPriority(1).putExtra("_level", 0).putExtra("_name", name);
-            Spider.create(new SchoolWebsitePageProcessor())
-                    .addRequest(request)
-                    .scheduler(new LevelLimitScheduler(3))
-                    .thread(1)
-                    .run();
+            Request request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", name);
+            requests[index] = request;
             index++;
-        }*/
+        }
+        Spider.create(new SchoolWebsitePageProcessor())
+                .addRequest(requests)
+                //.scheduler(new LevelLimitScheduler(3))
+                .thread(1)
+                .run();
+        /*
         School school = new School("武汉大学", "https://www.whu.edu.cn/");
         new AlumniDAO().add(school, dataSetName);
         extras.add(school);
-        Request request = new Request(school.getWebsite()).setPriority(1).putExtra("_level", 0).putExtra("_name", school.getName()).putExtra("parent", school.getWebsite());
+        Request request = new Request(school.getWebsite()).setPriority(10).putExtra("_level", 0).putExtra("_name", school.getName()).putExtra("parent", school.getWebsite());
         Spider.create(new SchoolWebsitePageProcessor())
                 .addRequest(request)
-                .scheduler(new LevelLimitScheduler(1))
-                .thread(1)
+                //.scheduler(new LevelLimitScheduler(3))
+                .thread(3)
                 .run();
+         */
     }
 }
