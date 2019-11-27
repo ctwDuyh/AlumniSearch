@@ -1,16 +1,24 @@
 package whu.alumnispider;
 
-import us.codecraft.webmagic.Page;
-import us.codecraft.webmagic.Request;
-import us.codecraft.webmagic.Site;
-import us.codecraft.webmagic.Spider;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import us.codecraft.webmagic.*;
+import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.PlainText;
+import us.codecraft.webmagic.utils.CharsetUtils;
+import us.codecraft.webmagic.utils.HttpClientUtils;
+import us.codecraft.webmagic.utils.HttpConstant;
 import whu.alumnispider.DAO.AlumniDAO;
+import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.scheduler.LevelLimitScheduler;
+import whu.alumnispider.site.MySite;
 import whu.alumnispider.utilities.College;
 import whu.alumnispider.utilities.GovSubpage;
 import whu.alumnispider.utilities.School;
 
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,9 +47,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
 
     static Set<School> extras = new HashSet<School>();
 
-    private Site site = Site.me().setSleepTime(150).setRetryTimes(2)
-            .addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
-
+    private Site site = new MySite().site;
     /*  extract the keyword in website.
         And add these website into database.
         19-11-14*/
@@ -122,15 +128,16 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Request[] requests = new Request[2000];
-        for(int i = 0; i < 2000; i++)
+        Request[] requests = new Request[1500];
+        for(int i = 0; i < 1500; i++)
         {
             requests[i] = new Request(" ");
         }
         while(index < collegeUrls.size()) {
-            System.out.println(index);
             String url = collegeUrls.get(index);
             if(url.charAt(url.length()-1)!='/') url += "/";
+
+            if(!url.startsWith("http")) url = "http://" + url;
 
             Matcher schoolMatcher = schoolPattern.matcher(url);
             if(!schoolMatcher.find()) {
@@ -142,15 +149,18 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             School school = new School(name, url);
             alumniDAO.add(school, dataSetName);
             extras.add(school);
-            Request request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", name);
+            Request request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", name).putExtra("parent", school.getWebsite());
             requests[index] = request;
             index++;
         }
-        Spider.create(new SchoolWebsitePageProcessor())
+        Spider spider = Spider.create(new SchoolWebsitePageProcessor())
                 .addRequest(requests)
                 //.scheduler(new LevelLimitScheduler(3))
-                .thread(1)
-                .run();
+                .thread(1);
+
+        HttpClientDownloader downloader = new BetterDownloader();
+        spider.setDownloader(downloader);
+        spider.run();
         /*
         School school = new School("武汉大学", "https://www.whu.edu.cn/");
         new AlumniDAO().add(school, dataSetName);

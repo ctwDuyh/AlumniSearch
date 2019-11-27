@@ -8,10 +8,13 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import us.codecraft.webmagic.proxy.SimpleProxyProvider;
 import us.codecraft.webmagic.selector.PlainText;
 import us.codecraft.webmagic.selector.Selectable;
+import us.codecraft.webmagic.utils.CharsetUtils;
 import us.codecraft.webmagic.utils.HttpClientUtils;
 import us.codecraft.webmagic.utils.HttpConstant;
 import whu.alumnispider.DAO.AlumniDAO;
+import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.parser.KeywordParser;
+import whu.alumnispider.site.MySite;
 import whu.alumnispider.utilities.College;
 import whu.alumnispider.utilities.GovLeaderPerson;
 
@@ -31,9 +34,7 @@ public class CollegeWebsitePageProcessor implements PageProcessor {
 
     private static AlumniDAO alumniDAO = new AlumniDAO();
 
-    private Site site = Site.me().setSleepTime(300).setCycleRetryTimes(5).setTimeOut(10000).setCharset("UTF-8")
-            .addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
-
+    private Site site = new MySite().site;
     public String tableName = "college";
 
     @Override
@@ -79,9 +80,11 @@ public class CollegeWebsitePageProcessor implements PageProcessor {
         college.setName(collegeName.toString());
         String content = collegeContent.toString();
         int start = content.indexOf("学校网址：");
-        int end = content.lastIndexOf(".cn");
-        if(start==-1||end==-1) return;
-        String website = content.substring(start+5,end+3);
+        if(start == -1) return;
+        content = content.substring(start+5);
+        int end = content.indexOf(".cn");
+        if(end==-1) return;
+        String website = content.substring(0,end+3);
         String REGEX_CHINESE = "[\u4e00-\u9fa5]";// 中文正则
         website = website.replaceAll(REGEX_CHINESE, "");
         college.setWebsite(website);
@@ -99,34 +102,12 @@ public class CollegeWebsitePageProcessor implements PageProcessor {
         Spider spider = Spider.create(new CollegeWebsitePageProcessor())
                 .addUrl(strings)
                 .thread(1);
-        HttpClientDownloader downloader = new HttpClientDownloader(){
-            @Override
-            protected Page handleResponse(Request request, String charset, HttpResponse httpResponse, Task task) throws IOException {
-                Page page = new Page();
-                if (httpResponse.getStatusLine().getStatusCode() != HttpConstant.StatusCode.CODE_200) {
-                    page.setDownloadSuccess(false);
-                    System.err.println("error: " + httpResponse.getStatusLine().getStatusCode() + " " + request.getUrl());
-                } else {
-                    byte[] bytes = IOUtils.toByteArray(httpResponse.getEntity().getContent());
-                    String contentType = httpResponse.getEntity().getContentType() == null ? "" : httpResponse.getEntity().getContentType().getValue();
-                    page.setBytes(bytes);
-                    if (!request.isBinaryContent()){
-                        page.setCharset("gb2312");//这里替换成要爬的网页的编码方式
-                        page.setRawText(new String(bytes, "gb2312"));
-                    }
-                    page.setUrl(new PlainText(request.getUrl()));
-                    page.setRequest(request);
-                    page.setStatusCode(httpResponse.getStatusLine().getStatusCode());
-                    page.setDownloadSuccess(true);
-                    page.setHeaders(HttpClientUtils.convertHeaders(httpResponse.getAllHeaders()));
-                }
-                return page;
-            }
 
-        };
-
+        HttpClientDownloader downloader = new BetterDownloader();
         spider.setDownloader(downloader);
         spider.run();
+
+
 
 
 /*
