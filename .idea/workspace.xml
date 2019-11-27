@@ -2,17 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8d33293-259f-40ad-aade-bdea10436364" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/AcademyWebsitePageProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Academy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Alumni.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/code.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/code.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2530e114-b0d7-4217-af42-bbb62305fdf2.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/log4j.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/e3ad3614-ce56-4e7f-9f55-29930cfef4c3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e3ad3614-ce56-4e7f-9f55-29930cfef4c3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/CollegeWebsitePageProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/CollegeWebsitePageProcessor.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +73,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
-        <option name="mavenHome" value="C:/Program Files/apache-maven-3.6.0" />
+        <option name="mavenHome" value="$APPLICATION_HOME_DIR$/plugins/maven/lib/maven3" />
       </MavenGeneralSettings>
     </option>
   </component>
@@ -101,11 +98,16 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="whu.alumnispider" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\GitHub\AlumniSearch\src\main\java" />
+      <recent name="E:\GitHub\AlumniSearch\src\main" />
+      <recent name="E:\GitHub\AlumniSearch\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -120,7 +122,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CollegeWebsitePageProcessor">
+  <component name="RunManager" selected="Application.BaiduSearchProcessor">
+    <configuration name="BaiduSearchProcessor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="whu.alumnispider.BaiduSearchProcessor" />
+      <module name="code" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="whu.alumnispider.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ChuangshiPageProcessor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ChuangshiPageProcessor" />
       <module name="AlumniSpider" />
@@ -137,13 +152,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GithubRepoPageProcessor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="GithubRepoPageProcessor" />
-      <module name="AlumniSpider" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -190,19 +198,20 @@
     </configuration>
     <list>
       <item itemvalue="Application.GovWebsitePageProcessor" />
-      <item itemvalue="Application.ChuangshiPageProcessor" />
       <item itemvalue="Application.GithubRepoPageProcessor" />
+      <item itemvalue="Application.ChuangshiPageProcessor" />
       <item itemvalue="Application.GovLeaderAlumniPageProcessor" />
       <item itemvalue="Application.LeaderAlumniPageProcessor" />
       <item itemvalue="Application.CollegeWebsitePageProcessor" />
+      <item itemvalue="Application.BaiduSearchProcessor" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.BaiduSearchProcessor" />
         <item itemvalue="Application.CollegeWebsitePageProcessor" />
         <item itemvalue="Application.GovLeaderAlumniPageProcessor" />
         <item itemvalue="Application.LeaderAlumniPageProcessor" />
         <item itemvalue="Application.ChuangshiPageProcessor" />
-        <item itemvalue="Application.GithubRepoPageProcessor" />
       </list>
     </recent_temporary>
   </component>
@@ -228,6 +237,8 @@
       <workItem from="1574647289327" duration="9148000" />
       <workItem from="1574668907996" duration="5761000" />
       <workItem from="1574733348496" duration="5368000" />
+      <workItem from="1574818981372" duration="7410000" />
+      <workItem from="1574836326490" duration="8249000" />
     </task>
     <servers />
   </component>
