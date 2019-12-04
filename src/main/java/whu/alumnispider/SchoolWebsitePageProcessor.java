@@ -1,24 +1,21 @@
 package whu.alumnispider;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
+import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import cn.wanghaomiao.xpath.model.JXDocument;
+import cn.wanghaomiao.xpath.model.JXNode;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import us.codecraft.webmagic.*;
 import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.processor.PageProcessor;
-import us.codecraft.webmagic.selector.PlainText;
-import us.codecraft.webmagic.utils.CharsetUtils;
-import us.codecraft.webmagic.utils.HttpClientUtils;
-import us.codecraft.webmagic.utils.HttpConstant;
+import us.codecraft.webmagic.selector.Selectable;
 import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
-import whu.alumnispider.scheduler.LevelLimitScheduler;
 import whu.alumnispider.site.MySite;
-import whu.alumnispider.utilities.College;
 import whu.alumnispider.utilities.GovSubpage;
 import whu.alumnispider.utilities.School;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
+
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,10 +25,11 @@ import java.util.regex.Pattern;
  */
 public class SchoolWebsitePageProcessor implements PageProcessor {
     private static String dataSetName = "school";
-    private static List<String> collegeUrls = new AlumniDAO().read("college", "website");
-    private static List<String> collegeNames = new AlumniDAO().read("college","collegename");
-
     private static AlumniDAO alumniDAO = new AlumniDAO();
+
+    private static List<String> collegeUrls = alumniDAO.read("college", "website");
+    private static List<String> collegeNames = alumniDAO.read("college","collegename");
+    private static List<String> collegeSigs = alumniDAO.read("college", "significant");
 
     // index represents the elements' index in database.
     private static int index = 0;
@@ -44,6 +42,10 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     private static Pattern schoolPattern = Pattern.compile(schoolRegex);
     private static String whuRegex = "武汉大学";
     private static Pattern whuPattern = Pattern.compile(whuRegex);
+    private static String schoolHomeXpath1 = "//a[allText() ~= \'.*院.*\']/@href";
+    private static String schoolHomeXpath2 = "//a[allText() ~= \'.*系.*\']/@href";
+    private static String schoolHomeXpath3 = "//a[allText() ~= \'.*部.*\']/@href";
+    private static String schoolHomeXpath4 = "//a[allText() ~= \'.*机构.*\']/@href";
 
     static Set<School> extras = new HashSet<School>();
 
@@ -53,6 +55,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
         19-11-14*/
     private void keywordExtract(Page page) {
         String processingText = page.getHtml().toString();
+        String collegeNameXpath = "//div[@class='bg_sez']/h2/text()";
         Matcher whuMatcher = whuPattern.matcher(processingText);
 
         if (whuMatcher.find()) {
@@ -64,11 +67,9 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
         }
     }
 
-    @Override
-    public void process(Page page) {
+    private void schoolPage(Page page)
+    {
         String processingUrl = page.getUrl().toString();
-        System.out.println(page.getRequest().getExtra("_level") + ": " + processingUrl);
-
         Matcher matcher = hrefPattern.matcher(page.getHtml().toString());
         while (matcher.find()) {
             String href = matcher.group();
@@ -90,36 +91,88 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             }
 
             // Delete the extracted empty href.
-            if (!href.equals("")&&!href.equals("#")&&!href.equals("")) {
-                if (href.charAt(0) == '.' && processingUrl.endsWith("/")) {
-                    href = processingUrl + href.substring(2, href.length() - 1);
-                } else if (href.charAt(0) == '.') {
-                    href = processingUrl + href.substring(1, href.length() - 1);
-                }
+            addSchool(href,processingUrl,page);
+        }
 
-                if(!href.contains("http") && !href.contains("www")) href = page.getRequest().getExtra("parent") + href;
 
-                School school = new School(page.getRequest().getExtra("_name").toString(), href);
-                if(!extras.contains(school))
-                {
-                    extras.add(school);
+        Document document = Jsoup.parse(page.getHtml().toString());
+        JXDocument jxDocument = new JXDocument(document);
+        List<JXNode> jxNodes = new ArrayList<>();
+        try {
+            jxNodes = jxDocument.selN(schoolHomeXpath1);
+            jxNodes.addAll(jxDocument.selN(schoolHomeXpath2));
+            jxNodes.addAll(jxDocument.selN(schoolHomeXpath3));
+            jxNodes.addAll(jxDocument.selN(schoolHomeXpath4));
+        } catch (XpathSyntaxErrorException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < jxNodes.size(); ++i){
+            String href = jxNodes.get(i).toString();
+            if (href.charAt(0) == '\"')
+                href = href.substring(1);
 
-                    Matcher schoolMatcher = schoolPattern.matcher(school.getWebsite());
-                    if(schoolMatcher.find())
-                    {
-                        alumniDAO.add(school,dataSetName);
-                    }
+            // Delete the extracted empty href.
+            addPage(href,processingUrl,page);
+        }
+    }
 
-                    if (((Integer)page.getRequest().getExtra("_level") < maxLevel) && school.getWebsite().startsWith(page.getRequest().getExtra("parent").toString())) {
-                        Request request = new Request(school.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))
-                                .putExtra("_name", school.getName())
-                                .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1))
-                                .putExtra("parent", page.getRequest().getExtra("parent"));
-                        page.addTargetRequest(request);
-                    }
+    private void addPage(String href, String processingUrl, Page page)
+    {
+        if (!href.equals("")&&!href.equals("#")&&!href.startsWith("javascript")) {
+            if (href.charAt(0) == '.' && processingUrl.endsWith("/")) {
+                href = processingUrl + href.substring(2, href.length() - 1);
+            } else if (href.charAt(0) == '.') {
+                href = processingUrl + href.substring(1, href.length() - 1);
+            }
+
+            if(!href.contains("http") && !href.contains("www")) href = page.getRequest().getExtra("parent") + href;
+
+            School school = new School(page.getRequest().getExtra("_name").toString(), href);
+            if(!extras.contains(school))
+            {
+                extras.add(school);
+                if (((Integer)page.getRequest().getExtra("_level") < maxLevel) && school.getWebsite().startsWith(page.getRequest().getExtra("parent").toString())) {
+                    Request request = new Request(school.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))
+                            .putExtra("_name", school.getName())
+                            .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1))
+                            .putExtra("parent", page.getRequest().getExtra("parent"));
+                    page.addTargetRequest(request);
                 }
             }
         }
+    }
+
+    private void addSchool(String href, String processingUrl, Page page)
+    {
+        if (!href.equals("")&&!href.equals("#")&&!href.startsWith("javascript")) {
+            if (href.charAt(0) == '.' && processingUrl.endsWith("/")) {
+                href = processingUrl + href.substring(2, href.length() - 1);
+            } else if (href.charAt(0) == '.') {
+                href = processingUrl + href.substring(1, href.length() - 1);
+            }
+
+            if(!href.contains("http") && !href.contains("www")) href = page.getRequest().getExtra("parent") + href;
+
+            School school = new School(page.getRequest().getExtra("_name").toString(), href);
+            if(!extras.contains(school))
+            {
+                Matcher schoolMatcher = schoolPattern.matcher(school.getWebsite());
+                if(schoolMatcher.find())
+                {
+                    alumniDAO.add(school,dataSetName);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void process(Page page) {
+        System.out.print(page.getRequest().getExtra("_level") + " ");
+        System.out.print(page.getRequest().getExtra("_name") + " ");
+        System.out.println(page.getUrl());
+
+        schoolPage(page);
+
     }
 
     @Override
@@ -128,12 +181,32 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Request[] requests = new Request[1500];
-        for(int i = 0; i < 1500; i++)
+        /*
+        Request request = new Request("https://www.whu.edu.cn/").setPriority(10).putExtra("_level", 0).putExtra("_name", "武汉大学").putExtra("parent", "https://www.whu.edu.cn/");
+        Spider spider = Spider.create(new SchoolWebsitePageProcessor())
+                .addRequest(request)
+                //.scheduler(new LevelLimitScheduler(3))
+                .thread(1);
+
+        HttpClientDownloader downloader = new BetterDownloader();
+        spider.setDownloader(downloader);
+        spider.run();
+        */
+
+
+        Request[] requests = new Request[2000];
+        for(int i = 0; i < 2000; i++)
         {
             requests[i] = new Request(" ");
         }
         while(index < collegeUrls.size()) {
+
+            if(!collegeSigs.get(index).equals("1"))
+            {
+                index++;
+                continue;
+            }
+
             String url = collegeUrls.get(index);
             if(url.charAt(url.length()-1)!='/') url += "/";
 
@@ -149,7 +222,14 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             School school = new School(name, url);
             alumniDAO.add(school, dataSetName);
             extras.add(school);
-            Request request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", name).putExtra("parent", school.getWebsite());
+            Request request = null;
+            if(school.getName().equals("清华大学"))
+            {
+                request = new Request(url + "publish/thu2018/index.html").setPriority(10).putExtra("_level", 0).putExtra("_name", name).putExtra("parent", school.getWebsite());
+            }
+            else{
+                request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", name).putExtra("parent", school.getWebsite());
+            }
             requests[index] = request;
             index++;
         }
@@ -161,16 +241,6 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
         HttpClientDownloader downloader = new BetterDownloader();
         spider.setDownloader(downloader);
         spider.run();
-        /*
-        School school = new School("武汉大学", "https://www.whu.edu.cn/");
-        new AlumniDAO().add(school, dataSetName);
-        extras.add(school);
-        Request request = new Request(school.getWebsite()).setPriority(10).putExtra("_level", 0).putExtra("_name", school.getName()).putExtra("parent", school.getWebsite());
-        Spider.create(new SchoolWebsitePageProcessor())
-                .addRequest(request)
-                //.scheduler(new LevelLimitScheduler(3))
-                .thread(3)
-                .run();
-         */
+
     }
 }

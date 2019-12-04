@@ -1,7 +1,12 @@
 package whu.alumnispider;
 
+import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import cn.wanghaomiao.xpath.model.JXDocument;
+import cn.wanghaomiao.xpath.model.JXNode;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import us.codecraft.webmagic.*;
 import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.processor.PageProcessor;
@@ -54,6 +59,7 @@ public class CollegeWebsitePageProcessor implements PageProcessor {
         Matcher homeLinkMatcher = homeLinkPattern.matcher(processingUrl);
         Matcher collegeLinkMatcher = collegeLinkPattern.matcher(processingUrl);
 
+
         if (homeLinkMatcher.find()) {
             // To get colleges' pages
             collegePage = page.getHtml().xpath(collegeLinkXpath);
@@ -62,9 +68,32 @@ public class CollegeWebsitePageProcessor implements PageProcessor {
         }
         else if(collegeLinkMatcher.find())
         {
+            //changeSig(page);
             getCollegePage(page);
         }
         System.out.println();
+
+    }
+
+    public void changeSig(Page page)
+    {
+        String collegeNameXpath = "//div[@class='bg_sez']/h2/text()";
+        String collegeContentXpath = "//div[@class='college_msg bk']/dl/dd/ul[@class='left basic_infor']/li/allText()";
+        Selectable collegeName;
+        Selectable collegeContent;
+
+        collegeName = page.getHtml().xpath(collegeNameXpath);
+        collegeContent = page.getHtml().xpath(collegeContentXpath);
+
+        String name = collegeName.toString().replaceAll("\\s*", "");
+        String sig = collegeContent.toString();
+
+        if(sig.contains("211")||sig.contains("985"))
+        {
+            alumniDAO.changeSig(name);
+        }
+
+
     }
 
     public void getCollegePage(Page page) {

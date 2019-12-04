@@ -13,7 +13,7 @@ public class AlumniDAO {
     public AlumniDAO() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC","root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test","root", "");
             stmt = conn.createStatement();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -94,6 +94,7 @@ public class AlumniDAO {
         return -1;
     }
 
+
     public int add(School school, String tableName) {
         try {
             String sql = "INSERT INTO `test`.`" + tableName + "`(`schoolname`, `website`)" + "VALUES (?, ?)";
@@ -102,6 +103,38 @@ public class AlumniDAO {
             preparedStatement.setString(1, school.getName());
             preparedStatement.setString(2, school.getWebsite());
 
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public int changeSig(String name)
+    {
+        try {
+            String sql = "UPDATE test.college SET significant = \'1\' WHERE collegename = \'" + name + "\';";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    public int removeBlank(String name)
+    {
+        try {
+            String newName = name.replaceAll("\\s*", "");
+            String sql = "UPDATE test.college SET collegename = \'" + newName + "\' WHERE collegename = \'" + name + "\';";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.executeUpdate();
+
+            sql = "UPDATE test.school SET schoolname = \'" + newName + "\' WHERE schoolname = \'" + name + "\';";
+            preparedStatement = conn.prepareStatement(sql);
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

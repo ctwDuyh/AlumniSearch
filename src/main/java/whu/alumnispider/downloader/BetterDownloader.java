@@ -26,7 +26,8 @@ public class BetterDownloader extends HttpClientDownloader {
             page.setBytes(bytes);
             if (!request.isBinaryContent()) {
                 if(charset==null) charset = CharsetUtils.detectCharset(contentType, bytes);
-                page.setCharset(charset);//这里替换成要爬的网页的编码方式
+                if(charset==null||charset=="utf-8,gbk,gb2312") charset = "utf-8";
+                page.setCharset(charset);
                 page.setRawText(new String(bytes, charset));
             }
             page.setUrl(new PlainText(request.getUrl()));
