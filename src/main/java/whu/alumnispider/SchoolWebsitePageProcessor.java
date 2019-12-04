@@ -8,12 +8,12 @@ import org.jsoup.nodes.Document;
 import us.codecraft.webmagic.*;
 import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.processor.PageProcessor;
-import us.codecraft.webmagic.selector.Selectable;
 import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
 import whu.alumnispider.utilities.GovSubpage;
 import whu.alumnispider.utilities.School;
+import whu.alumnispider.utilities.Website;
 
 
 import java.util.*;
@@ -94,6 +94,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             addSchool(href,processingUrl,page);
         }
 
+        if((Integer)page.getRequest().getExtra("_level") >= maxLevel) return;
 
         Document document = Jsoup.parse(page.getHtml().toString());
         JXDocument jxDocument = new JXDocument(document);
@@ -131,7 +132,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             if(!extras.contains(school))
             {
                 extras.add(school);
-                if (((Integer)page.getRequest().getExtra("_level") < maxLevel) && school.getWebsite().startsWith(page.getRequest().getExtra("parent").toString())) {
+                if (school.getWebsite().startsWith(page.getRequest().getExtra("parent").toString())) {
                     Request request = new Request(school.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))
                             .putExtra("_name", school.getName())
                             .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1))
@@ -156,6 +157,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             School school = new School(page.getRequest().getExtra("_name").toString(), href);
             if(!extras.contains(school))
             {
+                extras.add(school);
                 Matcher schoolMatcher = schoolPattern.matcher(school.getWebsite());
                 if(schoolMatcher.find())
                 {
@@ -241,6 +243,5 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
         HttpClientDownloader downloader = new BetterDownloader();
         spider.setDownloader(downloader);
         spider.run();
-
     }
 }

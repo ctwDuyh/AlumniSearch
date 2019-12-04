@@ -111,6 +111,22 @@ public class AlumniDAO {
         return -1;
     }
 
+    public int add(TeacherSet teacherSet, String tableName) {
+        try {
+            String sql = "INSERT INTO `test`.`" + tableName + "`(`collegename`, `website`)" + "VALUES (?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, teacherSet.getName());
+            preparedStatement.setString(2, teacherSet.getWebsite());
+
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
     public int changeSig(String name)
     {
         try {

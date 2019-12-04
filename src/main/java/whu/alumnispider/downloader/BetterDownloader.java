@@ -25,8 +25,9 @@ public class BetterDownloader extends HttpClientDownloader {
             String contentType = httpResponse.getEntity().getContentType() == null ? "" : httpResponse.getEntity().getContentType().getValue();
             page.setBytes(bytes);
             if (!request.isBinaryContent()) {
+                if(request.getExtra("_name")!=null && request.getExtra("_name").equals("重庆大学")) charset = "utf-8";
                 if(charset==null) charset = CharsetUtils.detectCharset(contentType, bytes);
-                if(charset==null||charset=="utf-8,gbk,gb2312") charset = "utf-8";
+                if(charset==null) charset = "utf-8";
                 page.setCharset(charset);
                 page.setRawText(new String(bytes, charset));
             }
