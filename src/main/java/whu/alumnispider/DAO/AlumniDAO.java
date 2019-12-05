@@ -13,7 +13,7 @@ public class AlumniDAO {
     public AlumniDAO() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC","root", "");
+            conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC","root", "123456");
             stmt = conn.createStatement();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -115,6 +115,25 @@ public class AlumniDAO {
 
         return -1;
     }
+
+    public int add(Alumni alumni, String tableName) {
+        try {
+            String sql = "INSERT INTO `test`.`" + tableName + "`(`name`, `job`,`illegal`,`website`)" + "VALUES (?, ?,?,?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, alumni.getName());
+            preparedStatement.setString(2, alumni.getJob());
+            preparedStatement.setBoolean(3, alumni.isIllegal());
+            preparedStatement.setString(4,alumni.getWebsite());
+
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
 
     public int add(Academy academy, String tableName) {
         try {

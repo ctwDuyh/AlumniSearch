@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8d33293-259f-40ad-aade-bdea10436364" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/log4j.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e3ad3614-ce56-4e7f-9f55-29930cfef4c3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e3ad3614-ce56-4e7f-9f55-29930cfef4c3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/code.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/code.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e3ad3614-ce56-4e7f-9f55-29930cfef4c3.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/CollegeWebsitePageProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/CollegeWebsitePageProcessor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/log4j.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/log4j.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Alumni.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Alumni.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,25 +33,18 @@
     <expand>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="test@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="test@127.0.0.1" type="feb32156:DbDataSourceImpl" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="test@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="test@127.0.0.1" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="test@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="test@127.0.0.1" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="test: schema" type="c314c289:MysqlImplModel$Schema" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="test@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="test: schema" type="c314c289:MysqlImplModel$Schema" />
-        <item name="college: table" type="98d5ac3d:MysqlImplModel$Table" />
+        <item name="test: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
     </expand>
     <select />
@@ -87,7 +82,7 @@
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574667733169" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="ignore_missing_gitignore" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="E:/实验室项目/仓库管理/RD406v2.0/中文版/演示软件/java/testdemo" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -105,6 +100,7 @@
       <recent name="whu.alumnispider" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\GitHub\AlumniSearch\resources" />
       <recent name="E:\GitHub\AlumniSearch\src\main\java" />
       <recent name="E:\GitHub\AlumniSearch\src\main" />
       <recent name="E:\GitHub\AlumniSearch\src" />
@@ -239,6 +235,17 @@
       <workItem from="1574733348496" duration="5368000" />
       <workItem from="1574818981372" duration="7410000" />
       <workItem from="1574836326490" duration="8249000" />
+      <workItem from="1574905876955" duration="5824000" />
+      <workItem from="1574922700637" duration="10322000" />
+      <workItem from="1574991930809" duration="6504000" />
+      <workItem from="1575009068704" duration="5553000" />
+      <workItem from="1575017998174" duration="2588000" />
+      <workItem from="1575251115529" duration="6586000" />
+      <workItem from="1575271117157" duration="913000" />
+      <workItem from="1575339445410" duration="1673000" />
+      <workItem from="1575356648228" duration="3831000" />
+      <workItem from="1575423973383" duration="6347000" />
+      <workItem from="1575441232776" duration="8979000" />
     </task>
     <servers />
   </component>
@@ -270,6 +277,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java</url>
           <line>130</line>
           <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchProcessor.java</url>
+          <line>93</line>
+          <option name="timeStamp" value="90" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
