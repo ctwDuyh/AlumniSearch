@@ -5,12 +5,11 @@ import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.Selectable;
 import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.parser.KeywordParser;
 import whu.alumnispider.utilities.Alumni;
-import whu.alumnispider.utilities.College;
-import whu.alumnispider.utilities.GovLeaderPerson;
 
 
 import java.util.ArrayList;
@@ -21,21 +20,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BaiduSearchProcessor implements PageProcessor {
-    //private static String personLinkRe = "https://baike.baidu.com/item/";
-    //private static Pattern personLinkPattern = Pattern.compile(personLinkRe);
-    private AlumniDAO alumniDAO = new AlumniDAO();
-    private boolean firstSearch = true;
+    private static AlumniDAO alumniDAO = new AlumniDAO();
     private Site site = Site.me().setSleepTime(150).setRetryTimes(2)
             .addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
 
-    public String tableName = "alumni";
+    public String tableName = "alumnis";
     private static List<String> searchNameList;
     private static final String[] SCHOOLNAME = {"武汉大学","武汉水利电力大学","武汉测绘科技大学","湖北医科大学",
-            "湖北水利水电学院", "葛洲坝水电工程学院","武汉测绘学院","武汉测量制图学院","湖北医学院","湖北省医学院",
-            "湖北省立医学院","武汉水利电力学院","武汉水利水电学院"};
+            "武汉水利水电学院", "葛洲坝水电工程学院","武汉测绘学院","武汉测量制图学院","湖北医学院","湖北省医学院",
+            "湖北省立医学院","武汉水利电力学院"};
     private static final String[] ILLEGALWORDS = {"违纪","违法"};
     private static final String[] PERSONILLEGALWORDS = {"涉嫌严重","因严重"};
-    private static HashSet<String> personHashSet = new HashSet<>();
 
 
     @Override
@@ -55,8 +50,6 @@ public class BaiduSearchProcessor implements PageProcessor {
         String personLinkXpath = "//ul[@class='polysemantList-wrapper cmn-clearfix']/li/a/@href";
         String personLinkXpath2 = "//ul[@class='custom_dot  para-list list-paddingleft-1']/li/div/a/@href";
         String personNamePath = "https://baike\\.baidu\\.com/item/(.*)";
-        //String processingUrl = page.getUrl().toString();
-        //Matcher personLinkMatcher = personLinkPattern.matcher(processingUrl);
         String name = getMatching(page.getUrl().toString(),personNamePath);
         // 第一次搜索，才爬取其他目录的网址
         if (searchNameList.contains(name)){
@@ -78,10 +71,13 @@ public class BaiduSearchProcessor implements PageProcessor {
         if (isPersonRelated2Whu(page)){
             getInformation(page);
         }
-
+        //已经爬取完
+        if (searchNameList.contains(name)){
+            alumniDAO.updateCandidate(name);
+        }
 
     }
-    //
+
     private boolean isPersonRelated2Whu(Page page){
 
         String entryTextXpath = "//dd/allText()";
@@ -114,11 +110,11 @@ public class BaiduSearchProcessor implements PageProcessor {
         return false;
     }
 
-    private boolean isPersonRelated2Illegal(Page page){
+    private boolean isPersonRelated2Illegal(Html html){
         String mainTextXpath = "//div[@class='para']/allText()";
         Selectable personWord;
         List<String> personWords;
-        personWord = page.getHtml().xpath(mainTextXpath);
+        personWord = html.xpath(mainTextXpath);
         personWords = personWord.all();
         return isWordRelated2Illegal(personWords);
     }
@@ -145,63 +141,134 @@ public class BaiduSearchProcessor implements PageProcessor {
         return false;
     }
 
-    // get person job
+    // get person information
     private void getInformation(Page page){
-        String personJobInfoPath1 = "//dd[@class='lemmaWgt-lemmaTitle-title']/h2/text()";
-        String personJobInfoPath2 = "//div[@class='lemma-summary']/div[@class='para']/allText()";
-        String personJobInfoPath3 = "//div[@class='basic-info cmn-clearfix']//dd/text()";
-        String personNamePath = "//dd[@class='lemmaWgt-lemmaTitle-title']/h1/text()";
-        String[] personJobPath2s = {"现任(.*?)。","职业为(.*?)。","现为(.*?)。","现系(.*?)。","现任(.*?)；","职业为(.*?)；","现为(.*?)；","现系(.*?)；"};
-        String personJobPath1 = "（(.*)）";
-        String indexPath = "\\[(\\d*?)\\]";
-        String blankPath = "(\\s|\\u00A0)*";
-        Selectable personJobInfoPage;
+
         String personJob;
-        Selectable personNamePage;
         String personName;
-        List<String> personJobInfos = new ArrayList<>();
         boolean isIllegal = false;
+        String website;
+        String picture;
+        String content;
+
         Alumni person = new Alumni();
+        Html html = page.getHtml();
+        personName = getPersonName(html);
+        personJob = getPersonJob(html);
+        isIllegal = isPersonRelated2Illegal(html);
+        website = page.getUrl().toString();
+        picture = getPersonPicture(html);
+        content = getPersonContent(html);
 
-        personJobInfoPage = page.getHtml().xpath(personJobInfoPath1);
-        personJob = personJobInfoPage.toString();
-        personNamePage = page.getHtml().xpath(personNamePath);
-        personName = personNamePage.toString();
-        // 判断从匹配模式一是否能够获取职业信息
-        if (personJob!=null){
-            personJob = getMatching(personJob,personJobPath1);
-        }
-        else {
-            // 从匹配模式二获取职业信息
-            personJobInfoPage = page.getHtml().xpath(personJobInfoPath2);
-            personJobInfos = personJobInfoPage.all();
-            personJob = getMatching(personJobInfos,personJobPath2s);
-            if (personJob==null){
-                personJobInfoPage = page.getHtml().xpath(personJobInfoPath3);
-                personJobInfos = personJobInfoPage.all();
-                personJob = getMatching(personJobInfos,personJobPath2s);
-            }
-
-            // 从匹配模式三获取职业信息(暂不需要)
-        }
-        if (isPersonRelated2Illegal(page)){
-            isIllegal = true;
+        System.out.println("人物姓名："+personName+", 人物信息："+personJob+", 人物图片："+picture);
+        if (isIllegal){
             System.out.println("注意："+personName+"涉嫌违法违纪。");
-        }
-        String url = page.getUrl().toString();
-        if (personJob!=null){
-            personJob = personJob.replaceAll(indexPath,"");
-            personJob = personJob.replaceAll(blankPath,"");
-            System.out.println("人物姓名："+personName+" , 人物信息："+personJob);
         }
         person.setName(personName);
         person.setJob(personJob);
         person.setIllegal(isIllegal);
-        person.setWebsite(url);
-        alumniDAO.add(person,"alumni");
+        person.setWebsite(website);
+        person.setPicture(picture);
+        person.setContent(content);
+        alumniDAO.add(person,tableName);
     }
-    // 用于职业匹配模式二
-    /*
+
+    private String getPersonName(Html html){
+        String personNamePath = "//dd[@class='lemmaWgt-lemmaTitle-title']/h1/text()";
+        Selectable personNamePage;
+        String personName;
+        personNamePage = html.xpath(personNamePath);
+        personName = personNamePage.toString();
+        return personName;
+    }
+
+    private String getPersonPicture(Html html){
+        String personPicturePath = "//div[@class='summary-pic']/a/img/@src";
+        Selectable personPicturePage;
+        List<String> personPictures;
+        personPicturePage = html.xpath(personPicturePath);
+        personPictures = personPicturePage.all();
+        for (String personPicture : personPictures){
+            return personPicture;
+        }
+        return null;
+    }
+
+
+    private String getPersonJob(Html html){
+        // xpath
+        String personJobInfoPath1 = "//dd[@class='lemmaWgt-lemmaTitle-title']/h2/text()";
+        String personJobInfoPath2 = "//div[@class='para']/allText()";
+        String personJobInfoPath3 = "//div[@class='basic-info cmn-clearfix']/allText()";
+        // java rgex
+        String[] personJobPath2s = {"现任(.*?)。","职业为(.*?)。","现为(.*?)。","现系(.*?)。","现任(.*?)；","职业为(.*?)；","现为(.*?)；","现系(.*?)；"};
+        String[] personJobPath3 = {"职务 (.*?) ","职称 (.*?) ","职业 (.*?) "};
+        String personJobPath1 = "（(.*)）";
+        String indexPath = "\\[\\d*?\\-?\\d*?\\]";
+        String blankPath = "(\\s|\\u00A0)*";
+        String blank160Path = "\\u00A0*";
+
+        Selectable personJobInfoPage;
+        String personJob;
+        List<String> personJobInfos = new ArrayList<>();
+
+        // 从匹配模式二获取职业信息
+        personJobInfoPage = html.xpath(personJobInfoPath2);
+        personJobInfos = personJobInfoPage.all();
+        personJob = getMatching(personJobInfos,personJobPath2s);
+        if (personJob==null){
+            // 从匹配模式一种获取职业信息
+            personJobInfoPage = html.xpath(personJobInfoPath1);
+            personJob = personJobInfoPage.toString();
+            // 判断从匹配模式一是否能够获取职业信息
+            if (personJob!=null){
+                //java正则匹配去除结果中括号
+                personJob = getMatching(personJob,personJobPath1);
+            }
+            //前两个模式都匹配失败，尝试从匹配模式三种获取职业信息
+            else {
+                personJobInfoPage = html.xpath(personJobInfoPath3);
+                personJob = personJobInfoPage.toString();
+                //结尾加空格，使得dd的内容始终被空格包裹
+                personJob = personJob + " ";
+                personJob = personJob.replaceAll(blank160Path,"");
+                personJob = getMatching(personJob,personJobPath3);
+            }
+        }
+        if (personJob!=null){
+            personJob = personJob.replaceAll(indexPath,"");
+            personJob = personJob.replaceAll(blankPath,"");
+        }
+        return personJob;
+    }
+
+    private String getPersonContent(Html html) {
+        String content = "";
+        String contentXpath1="//div[@class='para']/allText()";
+        String contentXpath2="//dd[@class='lemmaWgt-lemmaTitle-title']/allText()";
+        String contentXpath3="//div[@class='basic-info cmn-clearfix']//dd/allText()";
+        String contentXpath4="//dl[@class='lemma-reference collapse nslog-area log-set-param']//li/allText()";
+        List<String> contents = new ArrayList<>();
+        Selectable contentPage;
+        contentPage = html.xpath(contentXpath1);
+        contents = contentPage.all();
+        contentPage = html.xpath(contentXpath2);
+        contents.add(contentPage.toString());
+        contentPage = html.xpath(contentXpath3);
+        contents.addAll(contentPage.all());
+        contentPage = html.xpath(contentXpath4);
+        contents.addAll(contentPage.all());
+        for(String tempContent : contents){
+            for (String schoolName : SCHOOLNAME){
+                if (tempContent.contains(schoolName)){
+                    content = content + tempContent;
+                }
+            }
+        }
+        return content;
+    }
+
+    // 用于职业匹配模式三
     private String getMatching(String soap,String[] rgexs){
         for (String rgex : rgexs){
             Pattern pattern = Pattern.compile(rgex);
@@ -212,7 +279,8 @@ public class BaiduSearchProcessor implements PageProcessor {
         }
         return null;
     }
-    */
+
+    // 用于职业匹配模式二
     private String getMatching(List<String> soaps,String[] rgexs){
         for (String soap : soaps){
             for (String rgex : rgexs){
@@ -238,44 +306,10 @@ public class BaiduSearchProcessor implements PageProcessor {
 
 
     public static void main(String[] args) {
-        /*
-        searchNameList = Arrays.asList("万鄂湘","辜胜阻","陈小江","解振华","李金早", "李小林","李晓红","刘宁","鹿心社",
-                "阮成发","孙志刚","孙志军","庹震");
 
-        searchNameList = Arrays.asList("张军","安东","陈安丽","陈飞","邓中华","邓恢林","范恒山","范锐平","冯俊","甘霖",
-                "宫鸣","郭生练","何泽中","韩卫江","胡孝汉","胡振鹏");
+        //searchNameList = Arrays.asList("张德明");
+        searchNameList = alumniDAO.getCandidate();
 
-        searchNameList = Arrays.asList("黄宪起","黄海龙","黄俊华","蒋旭光","焦红","贾宇","柯良栋","李惠东","李建明",
-                "李军","李维森","李晓鹏","梁伟年","刘雅鸣");
-
-        searchNameList = Arrays.asList("刘晓鸣","柳芳","卢雍政","吕忠梅","罗东川","罗文","闵宜仁","随忠诚","彭佳学",
-                "彭克玉","谭作钧","汤敏","唐军","陶凯元","田立文");
-
-        searchNameList = Arrays.asList("田湘利","汪鸿雁","王玲","王少峰","王艳玲","王一新","魏海生","魏山忠","吴恳",
-                "肖云刚","谢晓尧","熊选国","徐显明","薛晓峰","薛江武","杨云彦","尹中卿");
-
-        searchNameList = Arrays.asList("岳中明","詹成付","张京泽","张鸣","张硕辅","张维宁","张野","郑功成","周汉民",
-                "周维现","白耀华","鲍常勇","鲍遂献","别必雄","蔡玲","陈晋");
-
-        searchNameList = Arrays.asList("池莉","丁仁立","丁尚清","丁小强","董石桂","付子堂","高玉葆","官景辉","郭全茂",
-                "郭永航","黄进","黄泰岩","姜文波","蒋昌忠");
-
-        searchNameList = Arrays.asList("金学峰","邝兵","李伏安","李宏伟","李建林","李鹏德","李清泉","李庆雄","李全战",
-                "吕文艳","李伟华","李莹","李志刚");
-
-        searchNameList = Arrays.asList("廖立强","刘传铁","刘汉俊","刘慕仁","鲁毅","马黎","欧阳玉靖","彭震中","乔余堂",
-                "宋灵恩","苏杨","谭仁杰","万速成","王本朝","王本强","王春峰","王广正","王立新");
-
-        searchNameList = Arrays.asList("魏凤君","吴国凯","吴祖云","武文忠","夏光","夏先鹏","鲜铁可","向东","肖勤福",
-                "谢红星","熊召政","徐宏","徐金鹏","许尔文","晏蒲柳","杨宏山");
-
-        searchNameList = Arrays.asList("杨志坚","姚庆海","易树柏","殷昭举","余龙华","岳晓勇","张辉峰","张劲","张志川",
-                "张志颇","赵立成","郑俊康","郑雁雄","周潮洪");
-
-        searchNameList = Arrays.asList("周创兵","周天鸿","李桥铭","吴社洲","朱列玉","魏青松","蔡华东","鲍英华","陈春林",
-                "鲍绍坤","车延高","陈军","程蔚东","陈俊宏","仇小乐","曹玉书");
-        */
-        searchNameList = Arrays.asList("曹玉书");
         List<String> urls = new ArrayList<>();
         for (String name : searchNameList){
             urls.add("https://baike.baidu.com/item/"+name);
@@ -286,8 +320,6 @@ public class BaiduSearchProcessor implements PageProcessor {
                 .addUrl(urlArray)
                 .thread(3)
                 .run();
-
-
 
     }
 }

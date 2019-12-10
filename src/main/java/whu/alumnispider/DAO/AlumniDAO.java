@@ -118,13 +118,15 @@ public class AlumniDAO {
 
     public int add(Alumni alumni, String tableName) {
         try {
-            String sql = "INSERT INTO `test`.`" + tableName + "`(`name`, `job`,`illegal`,`website`)" + "VALUES (?, ?,?,?)";
+            String sql = "INSERT INTO `test`.`" + tableName + "`(`name`, `job`,`illegal`,`website`,`picture`,`content`)" + "VALUES (?, ?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setString(1, alumni.getName());
             preparedStatement.setString(2, alumni.getJob());
             preparedStatement.setBoolean(3, alumni.isIllegal());
             preparedStatement.setString(4,alumni.getWebsite());
+            preparedStatement.setString(5,alumni.getPicture());
+            preparedStatement.setString(6,alumni.getContent());
 
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -148,6 +150,74 @@ public class AlumniDAO {
             e.printStackTrace();
         }
 
+        return -1;
+    }
+
+    public List<String> getCandidate() {
+        try {
+            List<String> rets = new ArrayList<>();
+            String sql = "SELECT name FROM `vipcandidate` WHERE state = 0";
+            ResultSet resultSet = stmt.executeQuery(sql);
+            while (resultSet.next()) {
+                String ret = resultSet.getString(1);
+                rets.add(ret);
+            }
+            return rets;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int updateCandidate(String name) {
+        try {
+            String sql = "UPDATE `vipcandidate` SET state = 1 WHERE name = '"+name+"'";
+            return stmt.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public List<String> getWebsite(){
+        try {
+            List<String> rets = new ArrayList<>();
+            String sql = "SELECT website FROM `alumnis` WHERE content is NULL";
+            ResultSet resultSet = stmt.executeQuery(sql);
+            while (resultSet.next()) {
+                String ret = resultSet.getString(1);
+                rets.add(ret);
+            }
+            return rets;
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public int updateContent(String website,String content){
+        try {
+            String sql = "UPDATE `alumnis` SET `content` = ? WHERE `website` = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, content);
+            preparedStatement.setString(2, website);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int addName(String name,String table){
+        try {
+            String sql = "INSERT INTO `" + table + "`(`name`,`state`) values(?,1) ";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1,name);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return -1;
     }
 }

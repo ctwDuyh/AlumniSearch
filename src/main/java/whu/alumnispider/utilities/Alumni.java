@@ -5,22 +5,8 @@ public class Alumni {
     private String job;
     private boolean isIllegal;
     private String website;
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public boolean isIllegal() {
-        return isIllegal;
-    }
-
-    public void setIllegal(boolean illegal) {
-        isIllegal = illegal;
-    }
+    private String picture;
+    private String content;
 
     public String getName() {
         return name;
@@ -38,4 +24,35 @@ public class Alumni {
         this.job = job;
     }
 
+    public boolean isIllegal() {
+        return isIllegal;
+    }
+
+    public void setIllegal(boolean illegal) {
+        isIllegal = illegal;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }
