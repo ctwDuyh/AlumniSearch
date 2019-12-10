@@ -14,6 +14,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
+import whu.alumnispider.utilities.Teacher;
 import whu.alumnispider.utilities.TeacherSet;
 
 import java.util.ArrayList;
@@ -22,24 +23,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-public class TeacherSetWebsitePageProcessor implements PageProcessor {
-    private static String dataSetName = "teacherset";
+public class TeacherWebsitePageProcessor implements PageProcessor {
+    private static String dataSetName = "teacher";
     private static AlumniDAO alumniDAO = new AlumniDAO();
 
-    private static List<String> schoolUrls = alumniDAO.read("school", "website");
-    private static List<String> collegeNames = alumniDAO.read("school","collegename");
-    private static List<String> schoolNames = alumniDAO.read("school","schoolname");
+    private static List<String> teacherSetUrls = alumniDAO.read("teacherset", "website");
+    private static List<String> collegeNames = alumniDAO.read("teacherset","collegename");
+    private static List<String> schoolNames = alumniDAO.read("teacherset","schoolname");
+    private static List<String> teacherSetNames = alumniDAO.read("teacherset","teachersetname");
 
-    // index represents the elements' index in database.
-    private static int maxLevel = 2;
-
-
-    private static String hrefRegex = "<a .*href=.+</a>";
-    private static Pattern hrefPattern = Pattern.compile(hrefRegex);
-    private static String schoolRegex = "edu.cn/?$";
-    private static Pattern schoolPattern = Pattern.compile(schoolRegex);
-    private static String whuRegex = "武汉大学";
-    private static Pattern whuPattern = Pattern.compile(whuRegex);
     private static String teacherSetXpath1 = "//a[allText() ~= \'.*师资.*\']";
     private static String teacherSetXpath2 = "//a[allText() ~= \'.*教师.*\']";
     private static String teacherSetXpath3 = "//a[allText() ~= \'.*人物.*\']";
@@ -49,8 +41,17 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
     private static String teacherSetXpath7 = "//a[allText() ~= \'.*教员.*\']";
     private static String teacherSetXpath8 = "//a[allText() ~= \'.*教授.*\']";
     private static String teacherSetXpath9 = "//a[allText() ~= \'.*博士.*\']";
+    private static String teacherSetXpath10 = "//a[allText() ~= \'.*院.*\']/@href";
+    private static String teacherSetXpath11 = "//a[allText() ~= \'.*系.*\']/@href";
+    private static String teacherSetXpath12 = "//a[allText() ~= \'.*部.*\']/@href";
+    private static String teacherSetXpath13 = "//a[allText() ~= \'.*所.*\']/@href";
 
-    static Set<TeacherSet> extras = new HashSet<TeacherSet>();
+    private static String teacherXpath = "//a";
+    private static int maxLevel = 1;
+
+
+    static Set<Teacher> extras = new HashSet<Teacher>();
+    static Set<Teacher> teachers = new HashSet<Teacher>();
 
     private Site site = new MySite().site;
 
@@ -71,6 +72,10 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
             jxNodes.addAll(jxDocument.selN(teacherSetXpath7));
             jxNodes.addAll(jxDocument.selN(teacherSetXpath8));
             jxNodes.addAll(jxDocument.selN(teacherSetXpath9));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath10));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath11));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath12));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath13));
         } catch (XpathSyntaxErrorException e) {
             e.printStackTrace();
         }
@@ -91,35 +96,81 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
                 String href = hrefNode.get(0).toString();
                 String name = "#";
                 if (href.charAt(0) == '\"')
-                href = href.substring(1, href.length()-1);
+                    href = href.substring(1, href.length()-1);
 
                 if (textNode.size()!=0) name = textNode.get(0).toString();
                 // Delete the extracted empty href.
-                addPage(href,name,processingUrl,page);
+                addPage(href,name,processingUrl,page,false);
             }
         }
     }
 
-    private void addPage(String href, String name, String processingUrl, Page page)
+    private void teacherPage(Page page)
+    {
+        String processingUrl = page.getUrl().toString();
+
+        Document document = Jsoup.parse(page.getHtml().toString());
+        JXDocument jxDocument = new JXDocument(document);
+        List<JXNode> jxNodes = new ArrayList<>();
+        try {
+            jxNodes = jxDocument.selN(teacherXpath);
+        } catch (XpathSyntaxErrorException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < jxNodes.size(); ++i){
+
+            List<JXNode> hrefNode = new ArrayList<>();
+            List<JXNode> textNode = new ArrayList<>();
+            try {
+                hrefNode = jxNodes.get(i).sel("@href");
+                textNode = jxNodes.get(i).sel("allText()");
+            } catch (XpathSyntaxErrorException e) {
+                e.printStackTrace();
+            }
+
+            if(hrefNode.size() == 0) continue;
+            else
+            {
+                String href = hrefNode.get(0).toString();
+                String name = "#";
+                if (href.charAt(0) == '\"')
+                    href = href.substring(1, href.length()-1);
+
+                if (textNode.size()!=0) name = textNode.get(0).toString();
+                // Delete the extracted empty href.
+                addPage(href,name,processingUrl,page,true);
+            }
+        }
+    }
+
+    private void addPage(String href, String name, String processingUrl, Page page, boolean addTeacher)
     {
         if (!href.equals("")&&!href.equals("#")&&!href.contains("javascript")) {
             href = HrefTool.getHref(href, page.getRequest().getExtra("parent").toString(), processingUrl);
 
-            TeacherSet teacherSet = new TeacherSet(page.getRequest().getExtra("_name").toString(),
-                    page.getRequest().getExtra("_sname").toString(), name, href);
-            if(!extras.contains(teacherSet))
+            Teacher teacher = new Teacher(page.getRequest().getExtra("_name").toString(),
+                    page.getRequest().getExtra("_sname").toString(), page.getRequest().getExtra("_tname").toString(), name, href);
+            if(!extras.contains(teacher)&&!addTeacher)
             {
-                extras.add(teacherSet);
-                if(teacherSet.getTeacherSetName().length()<8) alumniDAO.add(teacherSet,dataSetName);
-                if((Integer)page.getRequest().getExtra("_level") >= maxLevel) return;
-                if (teacherSet.getWebsite().startsWith(page.getRequest().getExtra("parent").toString())) {
-                    Request request = new Request(teacherSet.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))
-                            .putExtra("_name", teacherSet.getCollegeName())
-                            .putExtra("_sname", teacherSet.getSchoolName())
+                extras.add(teacher);
+                if(!teacher.getWebsite().startsWith(page.getUrl().toString().substring(0,page.getUrl().toString().indexOf(".edu.cn")+7))) return;
+                if((Integer)page.getRequest().getExtra("_level")<maxLevel && teacher.getTeacherName().length()<10 && !addTeacher)
+                {
+                    Request request = new Request(teacher.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))
+                            .putExtra("_name", teacher.getCollegeName())
+                            .putExtra("_sname", teacher.getSchoolName())
                             .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1))
+                            .putExtra("_tname", teacher.getTeacherSetName())
                             .putExtra("parent", page.getRequest().getExtra("parent"));
                     page.addTargetRequest(request);
                 }
+            }
+            if(!teachers.contains(teacher)&&addTeacher)
+            {
+                teachers.add(teacher);
+                if(!teacher.getWebsite().startsWith(page.getUrl().toString().substring(0,page.getUrl().toString().indexOf(".edu.cn")+7))) return;
+                if((teacher.getTeacherName().length()<15) && !teacher.getTeacherName().equals("") && addTeacher)
+                    alumniDAO.add(teacher,dataSetName);
             }
         }
     }
@@ -131,7 +182,12 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
         System.out.print(page.getRequest().getExtra("_sname") + " ");
         System.out.println(page.getUrl());
 
-        teacherSetPage(page);
+        teacherPage(page);
+
+        if((Integer)page.getRequest().getExtra("_level") < maxLevel)
+        {
+            teacherSetPage(page);
+        }
 
     }
 
@@ -154,30 +210,33 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
         */
 
 
-        Request[] requests = new Request[8800];
-        for(int i = 0; i < 8800; i++)
+        Request[] requests = new Request[20000];
+        for(int i = 0; i < 20000; i++)
         {
             requests[i] = new Request(" ");
         }
-        //over
 
-        for(int i = 8000; i < 8800; ++i) {
+        //10000
 
-            String url = schoolUrls.get(i);
+        for(int i = 10000; i < teacherSetUrls.size(); ++i) {
+
+            String url = teacherSetUrls.get(i);
             if(url.endsWith(".cn")) url += "/";
 
             if(!url.startsWith("http")) url = "http://" + url;
 
             String cname = collegeNames.get(i);
             String sname = schoolNames.get(i);
-            TeacherSet teacherSet = new TeacherSet(cname, sname, url);
-            extras.add(teacherSet);
+            String tname = teacherSetNames.get(i);
+            Teacher teacher = new Teacher(cname, sname, tname, url);
+            extras.add(teacher);
             Request request = null;
             String parent = url.substring(0,url.indexOf("/", 8)+1);
-            request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", cname).putExtra("parent", parent).putExtra("_sname", sname);
+            request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", cname).putExtra("parent", parent).putExtra("_sname", sname).putExtra("_tname", tname);
             requests[i] = request;
         }
-        Spider spider = Spider.create(new TeacherSetWebsitePageProcessor())
+
+        Spider spider = Spider.create(new TeacherWebsitePageProcessor())
                 .addRequest(requests)
                 .thread(3);
 

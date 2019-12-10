@@ -106,7 +106,7 @@ public class CollegeWebsitePageProcessor implements PageProcessor {
         collegeName = page.getHtml().xpath(collegeNameXpath);
         collegeContent = page.getHtml().xpath(collegeContentXpath);
 
-        college.setName(collegeName.toString());
+        college.setCollegeName(collegeName.toString());
         String content = collegeContent.toString();
         int start = content.indexOf("学校网址：");
         if(start == -1) return;

@@ -32,16 +32,16 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     private static List<String> collegeSigs = alumniDAO.read("college", "significant");
 
     // index represents the elements' index in database.
-    private static int index = 0;
     private static int maxLevel = 3;
 
 
-    private static String hrefRegex = "<a .*href=.+</a>";
+    private static String hrefRegex = "href=.*?>";
     private static Pattern hrefPattern = Pattern.compile(hrefRegex);
     private static String schoolRegex = "edu.cn/?$";
     private static Pattern schoolPattern = Pattern.compile(schoolRegex);
     private static String whuRegex = "武汉大学";
     private static Pattern whuPattern = Pattern.compile(whuRegex);
+    private static String hrefXpath = "//a";
     private static String schoolHomeXpath1 = "//a[allText() ~= \'.*院.*\']/@href";
     private static String schoolHomeXpath2 = "//a[allText() ~= \'.*系.*\']/@href";
     private static String schoolHomeXpath3 = "//a[allText() ~= \'.*部.*\']/@href";
@@ -50,29 +50,48 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
     static Set<School> extras = new HashSet<School>();
 
     private Site site = new MySite().site;
-    /*  extract the keyword in website.
-        And add these website into database.
-        19-11-14*/
-    private void keywordExtract(Page page) {
-        String processingText = page.getHtml().toString();
-        String collegeNameXpath = "//div[@class='bg_sez']/h2/text()";
-        Matcher whuMatcher = whuPattern.matcher(processingText);
-
-        if (whuMatcher.find()) {
-            GovSubpage govSubpage = new GovSubpage();
-            govSubpage.setOrganizer(page.getRequest().getExtra("Organizer").toString());
-            govSubpage.setUrl(page.getUrl().toString());
-
-            alumniDAO.add(govSubpage, "extractedPages");
-        }
-    }
 
     private void schoolPage(Page page)
     {
+
         String processingUrl = page.getUrl().toString();
+        Document document = Jsoup.parse(page.getHtml().toString());
+        JXDocument jxDocument = new JXDocument(document);
+        List<JXNode> jxNodes = new ArrayList<>();
+        try {
+            jxNodes = jxDocument.selN(hrefXpath);
+        } catch (XpathSyntaxErrorException e) {
+            e.printStackTrace();
+        }
+        for(int i = 0; i < jxNodes.size(); ++i){
+            List<JXNode> hrefNode = new ArrayList<>();
+            List<JXNode> textNode = new ArrayList<>();
+            try {
+                hrefNode = jxNodes.get(i).sel("@href");
+                textNode = jxNodes.get(i).sel("allText()");
+            } catch (XpathSyntaxErrorException e) {
+                e.printStackTrace();
+            }
+
+            if(hrefNode.size() == 0) continue;
+            else
+            {
+                String href = hrefNode.get(0).toString();
+                String name = "#";
+                if (textNode.size()!=0) name = textNode.get(0).toString();
+
+                if (href.charAt(0) == '\"')
+                    href = href.substring(1, href.length()-1);
+
+                addSchool(href,name,processingUrl,page);
+            }
+
+        }
+
         Matcher matcher = hrefPattern.matcher(page.getHtml().toString());
         while (matcher.find()) {
             String href = matcher.group();
+
             href = href.substring(href.indexOf("href="));
             if (href.charAt(5) == '\"') {
                 href = href.substring(6);
@@ -85,20 +104,16 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             } catch (Exception e) {
                 try {
                     href = href.substring(0, href.indexOf(" "));
+
                 } catch (Exception ee) {
                     href = href.substring(0, href.indexOf(">"));
                 }
             }
-
-            // Delete the extracted empty href.
-            addSchool(href,processingUrl,page);
+            addSchool(href, "#", processingUrl, page);
         }
 
         if((Integer)page.getRequest().getExtra("_level") >= maxLevel) return;
 
-        Document document = Jsoup.parse(page.getHtml().toString());
-        JXDocument jxDocument = new JXDocument(document);
-        List<JXNode> jxNodes = new ArrayList<>();
         try {
             jxNodes = jxDocument.selN(schoolHomeXpath1);
             jxNodes.addAll(jxDocument.selN(schoolHomeXpath2));
@@ -110,23 +125,15 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
         for(int i = 0; i < jxNodes.size(); ++i){
             String href = jxNodes.get(i).toString();
             if (href.charAt(0) == '\"')
-                href = href.substring(1);
-
-            // Delete the extracted empty href.
+                href = href.substring(1, href.length()-1);
             addPage(href,processingUrl,page);
         }
     }
 
     private void addPage(String href, String processingUrl, Page page)
     {
-        if (!href.equals("")&&!href.equals("#")&&!href.startsWith("javascript")) {
-            if (href.charAt(0) == '.' && processingUrl.endsWith("/")) {
-                href = processingUrl + href.substring(2, href.length() - 1);
-            } else if (href.charAt(0) == '.') {
-                href = processingUrl + href.substring(1, href.length() - 1);
-            }
-
-            if(!href.contains("http") && !href.contains("www")) href = page.getRequest().getExtra("parent") + href;
+        if (!href.equals("")&&!href.equals("#")&&!href.contains("javascript")) {
+            href = HrefTool.getHref(href, page.getRequest().getExtra("parent").toString(), processingUrl);
 
             School school = new School(page.getRequest().getExtra("_name").toString(), href);
             if(!extras.contains(school))
@@ -134,7 +141,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
                 extras.add(school);
                 if (school.getWebsite().startsWith(page.getRequest().getExtra("parent").toString())) {
                     Request request = new Request(school.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))
-                            .putExtra("_name", school.getName())
+                            .putExtra("_name", school.getCollegeName())
                             .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1))
                             .putExtra("parent", page.getRequest().getExtra("parent"));
                     page.addTargetRequest(request);
@@ -143,24 +150,18 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
         }
     }
 
-    private void addSchool(String href, String processingUrl, Page page)
+    private void addSchool(String href, String name, String processingUrl, Page page)
     {
         if (!href.equals("")&&!href.equals("#")&&!href.startsWith("javascript")) {
-            if (href.charAt(0) == '.' && processingUrl.endsWith("/")) {
-                href = processingUrl + href.substring(2, href.length() - 1);
-            } else if (href.charAt(0) == '.') {
-                href = processingUrl + href.substring(1, href.length() - 1);
-            }
+            href = HrefTool.getHref(href, page.getRequest().getExtra("parent").toString(), processingUrl);
 
-            if(!href.contains("http") && !href.contains("www")) href = page.getRequest().getExtra("parent") + href;
-
-            School school = new School(page.getRequest().getExtra("_name").toString(), href);
+            School school = new School(page.getRequest().getExtra("_name").toString(), name, href);
             if(!extras.contains(school))
             {
-                extras.add(school);
                 Matcher schoolMatcher = schoolPattern.matcher(school.getWebsite());
                 if(schoolMatcher.find())
                 {
+                    extras.add(school);
                     alumniDAO.add(school,dataSetName);
                 }
             }
@@ -196,52 +197,54 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
         */
 
 
+
         Request[] requests = new Request[2000];
         for(int i = 0; i < 2000; i++)
         {
             requests[i] = new Request(" ");
         }
-        while(index < collegeUrls.size()) {
+        //0
+        for(int i = 0; i < collegeNames.size(); ++i) {
 
-            if(!collegeSigs.get(index).equals("1"))
+            if(!collegeSigs.get(i).equals("1"))
             {
-                index++;
                 continue;
             }
 
-            String url = collegeUrls.get(index);
-            if(url.charAt(url.length()-1)!='/') url += "/";
+            String url = collegeUrls.get(i);
+            if(url.endsWith(".cn")) url += "/";
 
             if(!url.startsWith("http")) url = "http://" + url;
 
             Matcher schoolMatcher = schoolPattern.matcher(url);
             if(!schoolMatcher.find()) {
-                index++;
                 continue;
             }
 
-            String name = collegeNames.get(index);
+            String name = collegeNames.get(i);
             School school = new School(name, url);
             alumniDAO.add(school, dataSetName);
             extras.add(school);
             Request request = null;
-            if(school.getName().equals("清华大学"))
+
+            String parent = url.substring(0,url.indexOf("/", 8)+1);
+            if(school.getCollegeName().equals("清华大学"))
             {
-                request = new Request(url + "publish/thu2018/index.html").setPriority(10).putExtra("_level", 0).putExtra("_name", name).putExtra("parent", school.getWebsite());
+                request = new Request("https://www.tsinghua.edu.cn/publish/newthu/newthu_cnt/faculties/index.html").setPriority(10).putExtra("_level", 0).putExtra("_name", name).putExtra("parent", parent);
             }
             else{
-                request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", name).putExtra("parent", school.getWebsite());
+                request = new Request(url).setPriority(10).putExtra("_level", 0).putExtra("_name", name).putExtra("parent", parent);
             }
-            requests[index] = request;
-            index++;
+            requests[i] = request;
         }
         Spider spider = Spider.create(new SchoolWebsitePageProcessor())
                 .addRequest(requests)
                 //.scheduler(new LevelLimitScheduler(3))
-                .thread(1);
+                .thread(3);
 
         HttpClientDownloader downloader = new BetterDownloader();
         spider.setDownloader(downloader);
         spider.run();
+
     }
 }
