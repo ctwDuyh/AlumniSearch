@@ -64,7 +64,7 @@ public class BaiduSearchAddProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-
+        /*
         searchWebsiteList = alumniDAO.getWebsite();
 
         List<String> urls = new ArrayList<>(searchWebsiteList);
@@ -74,6 +74,17 @@ public class BaiduSearchAddProcessor implements PageProcessor {
                 .addUrl(urlArray)
                 .thread(3)
                 .run();
+        */
+        String rgex = "(z|f)ood";
+        String str = "zood1";
+        Pattern pattern = Pattern.compile(rgex);
+        Matcher m = pattern.matcher(str);
+        if (m.find()){
+            System.out.println(m.groupCount());
+            System.out.println(m.group(0));
+            System.out.println(m.group(1));
+
+        }
 
     }
 }
