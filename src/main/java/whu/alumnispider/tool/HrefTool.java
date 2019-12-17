@@ -1,4 +1,4 @@
-package whu.alumnispider;
+package whu.alumnispider.tool;
 
 public class HrefTool {
     public static String getHref(String href, String parent, String processUrl)

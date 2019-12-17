@@ -11,9 +11,8 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
-import whu.alumnispider.utilities.GovSubpage;
+import whu.alumnispider.tool.HrefTool;
 import whu.alumnispider.utilities.School;
-import whu.alumnispider.utilities.Website;
 
 
 import java.util.*;

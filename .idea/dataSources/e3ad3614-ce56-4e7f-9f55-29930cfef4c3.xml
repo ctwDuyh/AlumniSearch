@@ -912,80 +912,252 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="229" parent="6" name="college"/>
-    <table id="230" parent="6" name="extractedpages"/>
-    <table id="231" parent="6" name="govmunicapleleader"/>
-    <table id="232" parent="6" name="school"/>
-    <column id="233" parent="229" name="collegename">
+    <table id="229" parent="6" name="123"/>
+    <table id="230" parent="6" name="college"/>
+    <table id="231" parent="6" name="extractedpages"/>
+    <table id="232" parent="6" name="govmunicapleleader"/>
+    <table id="233" parent="6" name="new_table"/>
+    <table id="234" parent="6" name="school"/>
+    <table id="235" parent="6" name="structuredteacher"/>
+    <table id="236" parent="6" name="teacher"/>
+    <table id="237" parent="6" name="teacherset"/>
+    <table id="238" parent="6" name="whuteacher"/>
+    <table id="239" parent="6" name="wteacher"/>
+    <column id="240" parent="229" name="collegename">
+      <Position>1</Position>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="241" parent="229" name="schoolname">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="242" parent="229" name="teachersetname">
+      <Position>3</Position>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="243" parent="229" name="teachername">
+      <Position>4</Position>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="244" parent="229" name="website">
+      <Position>5</Position>
+      <DataType>text|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="245" parent="230" name="collegename">
       <Position>1</Position>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="234" parent="229" name="website">
+    <column id="246" parent="230" name="website">
       <Position>2</Position>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="235" parent="229" name="significant">
+    <column id="247" parent="230" name="significant">
       <Position>3</Position>
       <DataType>varchar(1)|0s</DataType>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="236" parent="230" name="url">
+    <column id="248" parent="231" name="url">
       <Position>1</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="237" parent="230" name="organizer">
+    <column id="249" parent="231" name="organizer">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="238" parent="231" name="name">
+    <column id="250" parent="232" name="name">
       <Position>1</Position>
       <DataType>varchar(50)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="239" parent="231" name="jobPosition">
+    <column id="251" parent="232" name="jobPosition">
       <Position>2</Position>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="240" parent="231" name="placeBirth">
+    <column id="252" parent="232" name="placeBirth">
       <Position>3</Position>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="241" parent="231" name="url">
+    <column id="253" parent="232" name="url">
       <Position>4</Position>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="242" parent="231" name="industry">
+    <column id="254" parent="232" name="industry">
       <Position>5</Position>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="243" parent="231" name="graduatedSchool">
+    <column id="255" parent="232" name="graduatedSchool">
       <Position>6</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="244" parent="232" name="schoolname">
+    <column id="256" parent="233" name="idnew_table">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="257" parent="233" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>idnew_table</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="258" parent="234" name="collegename">
       <Position>1</Position>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="245" parent="232" name="website">
+    <column id="259" parent="234" name="schoolname">
       <Position>2</Position>
       <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="246" parent="232" name="significant">
+    <column id="260" parent="234" name="website">
       <Position>3</Position>
-      <DataType>varchar(1)|0s</DataType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="261" parent="235" name="teachername">
+      <Position>1</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="262" parent="235" name="collegename">
+      <Position>2</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="263" parent="235" name="position">
+      <Position>3</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="264" parent="235" name="major">
+      <Position>4</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="265" parent="235" name="field">
+      <Position>5</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="266" parent="235" name="website">
+      <Position>6</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="267" parent="236" name="collegename">
+      <Position>1</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="268" parent="236" name="schoolname">
+      <Position>2</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="269" parent="236" name="teachersetname">
+      <Position>3</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="270" parent="236" name="teachername">
+      <Position>4</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="271" parent="236" name="website">
+      <Position>5</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="272" parent="237" name="collegename">
+      <Position>1</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="273" parent="237" name="schoolname">
+      <Position>2</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="274" parent="237" name="teachersetname">
+      <Position>3</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="275" parent="237" name="website">
+      <Position>4</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="276" parent="238" name="collegename">
+      <Position>1</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="277" parent="238" name="schoolname">
+      <Position>2</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="278" parent="238" name="teachersetname">
+      <Position>3</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="279" parent="238" name="teachername">
+      <Position>4</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="280" parent="238" name="rank">
+      <Position>5</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="281" parent="238" name="website">
+      <Position>6</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="282" parent="239" name="collegename">
+      <Position>1</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="283" parent="239" name="schoolname">
+      <Position>2</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="284" parent="239" name="teachersetname">
+      <Position>3</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="285" parent="239" name="teachername">
+      <Position>4</Position>
+      <DataType>longtext|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="286" parent="239" name="website">
+      <Position>5</Position>
+      <DataType>longtext|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
   </database-model>

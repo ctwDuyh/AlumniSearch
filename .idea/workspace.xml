@@ -2,25 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8d33293-259f-40ad-aade-bdea10436364" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/HrefTool.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/StructuredTeacherWebsitePageProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/WHUTeacherWebsitePageProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/StructuredTeacher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Teacher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/笔记" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/FilterWHUTeacherWebsitePageProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/tool/RankTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/tool/WHUTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e3ad3614-ce56-4e7f-9f55-29930cfef4c3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e3ad3614-ce56-4e7f-9f55-29930cfef4c3.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/CollegeWebsitePageProcessor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/CollegeWebsitePageProcessor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/utilities/College.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/utilities/College.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/CollegeWebsitePageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/CollegeWebsitePageProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/笔记" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/笔记" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/HrefTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/tool/HrefTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherSetWebsitePageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherSetWebsitePageProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/College.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/College.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/School.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/School.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/TeacherSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/TeacherSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Website.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Website.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/WHUTeacherWebsitePageProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/WHUTeacherWebsitePageProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/笔记" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/笔记" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -115,36 +110,41 @@
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.102" value="1" />
           <entry key="project.open.time.51" value="1" />
-          <entry key="project.open.time.52" value="1" />
+          <entry key="project.open.time.52" value="2" />
           <entry key="project.open.time.57" value="1" />
           <entry key="project.open.time.59" value="1" />
+          <entry key="project.open.time.60" value="1" />
           <entry key="project.open.time.61" value="2" />
+          <entry key="project.open.time.62" value="1" />
           <entry key="project.open.time.64" value="1" />
           <entry key="project.open.time.65" value="1" />
           <entry key="project.open.time.66" value="1" />
           <entry key="project.open.time.72" value="1" />
           <entry key="project.open.time.75" value="1" />
+          <entry key="project.open.time.87" value="1" />
           <entry key="project.open.time.89" value="1" />
-          <entry key="project.opened" value="14" />
+          <entry key="project.opened" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="64" />
+          <entry key="class" value="68" />
           <entry key="college" value="6" />
-          <entry key="java" value="97" />
+          <entry key="java" value="119" />
           <entry key="properties" value="2" />
           <entry key="school" value="5" />
           <entry key="sql" value="2" />
-          <entry key="笔记" value="1" />
+          <entry key="teacher" value="1" />
+          <entry key="whuteacher" value="1" />
+          <entry key="笔记" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="64" />
-          <entry key="Database Element" value="11" />
-          <entry key="JAVA" value="97" />
-          <entry key="PLAIN_TEXT" value="1" />
+          <entry key="CLASS" value="68" />
+          <entry key="Database Element" value="13" />
+          <entry key="JAVA" value="119" />
+          <entry key="PLAIN_TEXT" value="2" />
           <entry key="Properties" value="2" />
           <entry key="Scratch" value="2" />
         </counts>
@@ -153,16 +153,16 @@
         <counts>
           <entry key="cell" value="8" />
           <entry key="class" value="6" />
-          <entry key="java" value="8692" />
+          <entry key="java" value="9643" />
           <entry key="sql" value="1" />
-          <entry key="笔记" value="103" />
+          <entry key="笔记" value="2151" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CLASS" value="6" />
-          <entry key="JAVA" value="8691" />
-          <entry key="PLAIN_TEXT" value="103" />
+          <entry key="JAVA" value="9642" />
+          <entry key="PLAIN_TEXT" value="2151" />
           <entry key="SQL" value="1" />
           <entry key="Scratch" value="9" />
         </counts>
@@ -175,31 +175,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/StructuredTeacherWebsitePageProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="87" column="48" selection-start-line="87" selection-start-column="48" selection-end-line="87" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/CollegeWebsitePageProcessor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2090">
-              <caret line="124" selection-start-line="124" selection-end-line="124" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4180">
-              <caret line="213" column="28" selection-start-line="213" selection-start-column="28" selection-end-line="213" selection-end-column="28" />
+            <state relative-caret-position="4818">
+              <caret line="245" lean-forward="true" selection-start-line="245" selection-end-line="245" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -208,34 +187,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/WHUTeacherWebsitePageProcessor.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="43" selection-end-column="90" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="2200">
+              <caret line="126" column="52" selection-start-line="126" selection-start-column="46" selection-end-line="126" selection-end-column="52" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/downloader/BetterDownloader.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherSetWebsitePageProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="18" selection-start-line="18" selection-end-line="18" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://G:/webmagic/webmagic-core-0.7.3.jar!/us/codecraft/webmagic/Spider.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3388">
-              <caret line="195" selection-start-line="195" selection-end-line="195" />
+            <state relative-caret-position="-1209">
+              <caret line="108" column="33" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -269,6 +233,8 @@
       <find>website</find>
       <find>href</find>
       <find>KeywordParser</find>
+      <find>武汉</find>
+      <find>length</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -284,7 +250,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java" />
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/2530e114-b0d7-4217-af42-bbb62305fdf2/console.sql" />
         <option value="$PROJECT_DIR$/resources/log4j.properties" />
@@ -297,16 +262,21 @@
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/TeacherSet.java" />
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/CollegeWebsitePageProcessor.java" />
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcesssor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/笔记" />
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Teacher.java" />
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/HrefTool.java" />
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherSetWebsitePageProcessor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcessor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/WHUTeacherWebsitePageProcessor.java" />
-        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/StructuredTeacher.java" />
         <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/StructuredTeacherWebsitePageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/HrefTool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/tool/WHUTool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/FilterWHUTeacherWebsitePageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/WHUTeacherWebsitePageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/tool/RankTool.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherSetWebsitePageProcessor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/笔记" />
+        <option value="$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcessor.java" />
       </list>
     </option>
   </component>
@@ -329,11 +299,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="950" />
-    <option name="y" value="-10" />
-    <option name="width" value="979" />
-    <option name="height" value="1049" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="980" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectId" id="1SofUIe6IyuyXqp82rhH2YrwmR3" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -342,8 +312,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -389,7 +359,7 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="alumnispider" type="462c0819:PsiDirectoryNode" />
-              <item name="DAO" type="462c0819:PsiDirectoryNode" />
+              <item name="tool" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AlumniSearch" type="b2602c69:ProjectViewProjectNode" />
@@ -399,6 +369,10 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="alumnispider" type="462c0819:PsiDirectoryNode" />
               <item name="utilities" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AlumniSearch" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -411,7 +385,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1575876635567" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1576574408824" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="ignore_missing_gitignore" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../jsoup/JsoupXpath-0.3.2.jar!/" />
@@ -445,9 +419,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.StructuredTeacherWebsitePageProcessor">
-    <configuration name="CollegeWebsitePageProcessor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="whu.alumnispider.CollegeWebsitePageProcessor" />
+  <component name="RunManager" selected="Application.TeacherWebsitePageProcessor">
+    <configuration name="FilterWHUTeacherWebsitePageProcessor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="whu.alumnispider.FilterWHUTeacherWebsitePageProcessor" />
       <module name="code" />
       <extension name="coverage">
         <pattern>
@@ -464,7 +438,7 @@
       <module name="code" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="whu.alumnispider.*" />
+          <option name="PATTERN" value="whu.alumnispider.tool.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -478,7 +452,7 @@
       <option name="VM_PARAMETERS" value="-Xms1024m -Xmx1024m" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="whu.alumnispider.*" />
+          <option name="PATTERN" value="whu.alumnispider.tool.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -491,7 +465,7 @@
       <module name="code" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="whu.alumnispider.*" />
+          <option name="PATTERN" value="whu.alumnispider.tool.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -505,7 +479,7 @@
       <option name="VM_PARAMETERS" value="-Xms1024m -Xmx1024m" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="whu.alumnispider.*" />
+          <option name="PATTERN" value="whu.alumnispider.tool.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -519,7 +493,7 @@
       <option name="VM_PARAMETERS" value="-Xms1024m -Xmx1024m" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="whu.alumnispider.*" />
+          <option name="PATTERN" value="whu.alumnispider.tool.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -541,7 +515,7 @@
       <option name="VM_PARAMETERS" value="-Xms1024m -Xmx1024m" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="whu.alumnispider.*" />
+          <option name="PATTERN" value="whu.alumnispider.tool.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -553,19 +527,19 @@
       <item itemvalue="Application.Unnamed" />
       <item itemvalue="Application.GovWebsitePageProcessor" />
       <item itemvalue="Application.WHUTeacherWebsitePageProcessor" />
-      <item itemvalue="Application.CollegeWebsitePageProcessor" />
       <item itemvalue="Application.SchoolWebsitePageProcessor" />
       <item itemvalue="Application.TeacherSetWebsitePageProcessor" />
       <item itemvalue="Application.TeacherWebsitePageProcessor" />
       <item itemvalue="Application.StructuredTeacherWebsitePageProcessor" />
+      <item itemvalue="Application.FilterWHUTeacherWebsitePageProcessor" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.StructuredTeacherWebsitePageProcessor" />
         <item itemvalue="Application.TeacherWebsitePageProcessor" />
+        <item itemvalue="Application.FilterWHUTeacherWebsitePageProcessor" />
+        <item itemvalue="Application.StructuredTeacherWebsitePageProcessor" />
         <item itemvalue="Application.TeacherSetWebsitePageProcessor" />
         <item itemvalue="Application.SchoolWebsitePageProcessor" />
-        <item itemvalue="Application.CollegeWebsitePageProcessor" />
       </list>
     </recent_temporary>
   </component>
@@ -602,12 +576,16 @@
       <workItem from="1575597203813" duration="16652000" />
       <workItem from="1575628934797" duration="39277000" />
       <workItem from="1575855939523" duration="8530000" />
-      <workItem from="1575943350046" duration="598000" />
+      <workItem from="1575943350046" duration="1229000" />
+      <workItem from="1576115639872" duration="597000" />
+      <workItem from="1576201980628" duration="6649000" />
+      <workItem from="1576461213138" duration="12209000" />
+      <workItem from="1576547975722" duration="5173000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="209524000" />
+    <option name="totallyTimeSpent" value="234783000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -622,7 +600,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49360615" visible="true" weight="0.24396783" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49360615" visible="true" weight="0.23502605" />
       <window_info id="Structure" order="1" sideWeight="0.50639385" side_tool="true" weight="0.27882037" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -632,7 +610,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.5184136" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49932975" weight="0.47939262" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.61898017" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3598901" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
@@ -640,7 +618,7 @@
       <window_info anchor="bottom" id="Database Changes" order="8" weight="0.3286119" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50067025" side_tool="true" weight="0.47308782" />
-      <window_info anchor="bottom" id="Messages" order="11" weight="0.41218132" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.41208792" />
       <window_info anchor="bottom" id="Database Console" order="12" weight="0.53541076" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -649,7 +627,7 @@
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Database" order="7" weight="0.21782842" />
+      <window_info anchor="right" id="Database" order="7" weight="0.20963542" />
       <window_info anchor="right" id="Maven Projects" order="8" weight="0.2419571" />
     </layout>
   </component>
@@ -727,48 +705,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/scheduler/LevelLimitScheduler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://G:/webmagic/webmagic-core-0.7.3.jar!/us/codecraft/webmagic/downloader/Downloader.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://G:/webmagic/webmagic-core-0.7.3.jar!/us/codecraft/webmagic/Site.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://G:/webmagic/webmagic-core-0.7.3.jar!/us/codecraft/webmagic/downloader/AbstractDownloader.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="25" column="94" selection-start-line="25" selection-start-column="94" selection-end-line="25" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://G:/webmagic/webmagic-core-0.7.3.jar!/us/codecraft/webmagic/selector/BaseElementSelector.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-178">
-          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://G:/webmagic/webmagic-core-0.7.3.jar!/us/codecraft/webmagic/selector/XpathSelector.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -902,13 +838,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_172/src.zip!/java/util/regex/Matcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="621" column="19" selection-start-line="621" selection-start-column="19" selection-end-line="621" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_172/src.zip!/java/net/Inet6AddressImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
@@ -937,13 +866,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/笔记">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="14" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/parser/KeywordParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -951,31 +873,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1760">
-          <caret line="109" column="18" selection-start-line="109" selection-start-column="8" selection-end-line="109" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-56">
-          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_172/src.zip!/java/lang/String.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="1957" column="18" selection-start-line="1957" selection-start-column="18" selection-end-line="1957" selection-end-column="18" />
-          <folding>
-            <element signature="e#82971#82972#0" expanded="true" />
-            <element signature="e#83020#83021#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -993,13 +894,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/HrefTool.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Teacher.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -1011,20 +905,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="5" column="27" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="265">
-          <caret line="233" selection-start-line="232" selection-start-column="26" selection-end-line="233" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherSetWebsitePageProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="57" column="5" lean-forward="true" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1042,34 +922,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/downloader/BetterDownloader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="153" column="56" selection-start-line="153" selection-start-column="56" selection-end-line="153" selection-end-column="56" />
+        <state relative-caret-position="154">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_172/src.zip!/java/util/regex/Matcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="334" column="56" lean-forward="true" selection-start-line="334" selection-start-column="56" selection-end-line="334" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/tool/HrefTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/StructuredTeacherWebsitePageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="87" column="48" selection-start-line="87" selection-start-column="48" selection-end-line="87" selection-end-column="48" />
+        <state relative-caret-position="66">
+          <caret line="3" column="15" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/CollegeWebsitePageProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="105" column="61" lean-forward="true" selection-start-line="105" selection-start-column="22" selection-end-line="105" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://G:/webmagic/jsoup-1.10.3.jar!/org/jsoup/nodes/Element.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="517" column="18" selection-start-line="517" selection-start-column="18" selection-end-line="517" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovLeaderAlumniPageProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1843">
+          <caret line="109" column="18" selection-start-line="109" selection-start-column="8" selection-end-line="109" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="631">
+          <caret line="68" column="36" selection-start-line="68" selection-start-column="36" selection-end-line="68" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/CollegeWebsitePageProcessor.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/tool/WHUTool.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2090">
-          <caret line="124" selection-start-line="124" selection-end-line="124" />
+        <state relative-caret-position="506">
+          <caret line="23" column="28" lean-forward="true" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcessor.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/FilterWHUTeacherWebsitePageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4180">
-          <caret line="213" column="28" selection-start-line="213" selection-start-column="28" selection-end-line="213" selection-end-column="28" />
+        <state relative-caret-position="56">
+          <caret line="84" column="47" lean-forward="true" selection-start-line="84" selection-start-column="47" selection-end-line="84" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/tool/RankTool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="22" column="5" selection-start-line="22" selection-start-column="5" selection-end-line="22" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1078,18 +1010,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/WHUTeacherWebsitePageProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="43" selection-end-column="90" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/downloader/BetterDownloader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="18" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="66">
+          <caret line="37" column="42" lean-forward="true" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1098,8 +1020,60 @@
     </entry>
     <entry file="jar://G:/webmagic/webmagic-core-0.7.3.jar!/us/codecraft/webmagic/Spider.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3388">
-          <caret line="195" selection-start-line="195" selection-end-line="195" />
+        <state relative-caret-position="98">
+          <caret line="319" selection-start-line="319" selection-end-line="319" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://e3ad3614-ce56-4e7f-9f55-29930cfef4c3/schema/test/table/teacher">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/笔记">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="82" column="22" selection-start-line="82" selection-start-column="22" selection-end-line="82" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="143" selection-start-line="143" selection-end-line="143" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://e3ad3614-ce56-4e7f-9f55-29930cfef4c3/schema/test/table/whuteacher">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherSetWebsitePageProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1209">
+          <caret line="108" column="33" selection-start-line="108" selection-start-column="23" selection-end-line="108" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/SchoolWebsitePageProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2200">
+          <caret line="126" column="52" selection-start-line="126" selection-start-column="46" selection-end-line="126" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/whu/alumnispider/TeacherWebsitePageProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4818">
+          <caret line="245" lean-forward="true" selection-start-line="245" selection-end-line="245" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1161,6 +1135,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

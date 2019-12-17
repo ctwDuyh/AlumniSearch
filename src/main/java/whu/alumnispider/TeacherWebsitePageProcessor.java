@@ -14,14 +14,13 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
+import whu.alumnispider.tool.HrefTool;
 import whu.alumnispider.utilities.Teacher;
-import whu.alumnispider.utilities.TeacherSet;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 public class TeacherWebsitePageProcessor implements PageProcessor {
     private static String dataSetName = "teacher";
@@ -118,7 +117,6 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
             e.printStackTrace();
         }
         for(int i = 0; i < jxNodes.size(); ++i){
-
             List<JXNode> hrefNode = new ArrayList<>();
             List<JXNode> textNode = new ArrayList<>();
             try {
@@ -154,13 +152,13 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
             {
                 extras.add(teacher);
                 if(!teacher.getWebsite().startsWith(page.getUrl().toString().substring(0,page.getUrl().toString().indexOf(".edu.cn")+7))) return;
-                if((Integer)page.getRequest().getExtra("_level")<maxLevel && teacher.getTeacherName().length()<10 && !addTeacher)
+                if((Integer)page.getRequest().getExtra("_level")<maxLevel && !addTeacher)
                 {
                     Request request = new Request(teacher.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))
                             .putExtra("_name", teacher.getCollegeName())
                             .putExtra("_sname", teacher.getSchoolName())
                             .putExtra("_level", ((Integer) page.getRequest().getExtra("_level") + 1))
-                            .putExtra("_tname", teacher.getTeacherSetName())
+                            .putExtra("_tname", teacher.getTeacherName())
                             .putExtra("parent", page.getRequest().getExtra("parent"));
                     page.addTargetRequest(request);
                 }
@@ -169,8 +167,7 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
             {
                 teachers.add(teacher);
                 if(!teacher.getWebsite().startsWith(page.getUrl().toString().substring(0,page.getUrl().toString().indexOf(".edu.cn")+7))) return;
-                if((teacher.getTeacherName().length()<15) && !teacher.getTeacherName().equals("") && addTeacher)
-                    alumniDAO.add(teacher,dataSetName);
+                alumniDAO.add(teacher,dataSetName);
             }
         }
     }
@@ -198,8 +195,9 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
 
     public static void main(String[] args) {
         /*
-        Request request = new Request("https://www.whu.edu.cn/").setPriority(10).putExtra("_level", 0).putExtra("_name", "武汉大学").putExtra("parent", "https://www.whu.edu.cn/");
-        Spider spider = Spider.create(new SchoolWebsitePageProcessor())
+        Request request = new Request("https://yyxy.hunnu.edu.cn/xygk/szdw.htm").setPriority(10).putExtra("_level", 0).putExtra("_name", "武汉大学")
+        .putExtra("_sname", "武汉大学").putExtra("_tname", "武汉大学").putExtra("parent", "https://www.whu.edu.cn/");
+        Spider spider = Spider.create(new TeacherWebsitePageProcessor())
                 .addRequest(request)
                 //.scheduler(new LevelLimitScheduler(3))
                 .thread(1);
@@ -207,7 +205,9 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
         HttpClientDownloader downloader = new BetterDownloader();
         spider.setDownloader(downloader);
         spider.run();
+
         */
+
 
 
         Request[] requests = new Request[20000];
@@ -243,5 +243,6 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
         HttpClientDownloader downloader = new BetterDownloader();
         spider.setDownloader(downloader);
         spider.run();
+
     }
 }

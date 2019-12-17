@@ -14,6 +14,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
+import whu.alumnispider.tool.HrefTool;
 import whu.alumnispider.utilities.TeacherSet;
 
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
             if(!extras.contains(teacherSet))
             {
                 extras.add(teacherSet);
-                if(teacherSet.getTeacherSetName().length()<8) alumniDAO.add(teacherSet,dataSetName);
+                alumniDAO.add(teacherSet,dataSetName);
                 if((Integer)page.getRequest().getExtra("_level") >= maxLevel) return;
                 if (teacherSet.getWebsite().startsWith(page.getRequest().getExtra("parent").toString())) {
                     Request request = new Request(teacherSet.getWebsite()).setPriority(9-(Integer)page.getRequest().getExtra("_level"))

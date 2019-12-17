@@ -12,6 +12,7 @@ import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.downloader.HttpClientDownloader;
 import us.codecraft.webmagic.processor.PageProcessor;
+import us.codecraft.webmagic.selector.Selectable;
 import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
@@ -25,30 +26,30 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-public class WHUTeacherWebsitePageProcessor implements PageProcessor {
+public class FilterWHUTeacherWebsitePageProcessor implements PageProcessor {
     private static String dataSetName = "whuteacher";
     private static AlumniDAO alumniDAO = new AlumniDAO();
 
-    private static List<String> teacherUrls = alumniDAO.read("teacher", "website");
-    private static List<String> collegeNames = alumniDAO.read("teacher","collegename");
-    private static List<String> schoolNames = alumniDAO.read("teacher","schoolname");
-    private static List<String> teacherSetNames = alumniDAO.read("teacher","teachersetname");
-    private static List<String> teacherNames = alumniDAO.read("teacher","teachername");
+    private static List<String> teacherUrls = alumniDAO.read("wteacher", "website");
+    private static List<String> collegeNames = alumniDAO.read("wteacher","collegename");
+    private static List<String> schoolNames = alumniDAO.read("wteacher","schoolname");
+    private static List<String> teacherSetNames = alumniDAO.read("wteacher","teachersetname");
+    private static List<String> teacherNames = alumniDAO.read("wteacher","teachername");
 
     private Site site = new MySite().site;
 
     private void whuTeacherPage(Page page)
     {
-        Whitelist whitelist = new Whitelist();
-        String text = Jsoup.clean(page.getHtml().toString(), whitelist);
-        if(WHUTool.isWHU(text))
-        {
-            Request request = page.getRequest();
-            Teacher teacher = new Teacher(request.getExtra("_name").toString(), request.getExtra("_sname").toString(),
-                    request.getExtra("_tname").toString(), request.getExtra("_tname2").toString(), request.getUrl());
-            String rank = RankTool.getRank(text);
-            alumniDAO.add(teacher,rank,dataSetName);
-        }
+            Whitelist whitelist = new Whitelist();
+            String text = Jsoup.clean(page.getHtml().toString(), whitelist);
+            if(WHUTool.isWHU(text))
+            {
+                Request request = page.getRequest();
+                Teacher teacher = new Teacher(request.getExtra("_name").toString(), request.getExtra("_sname").toString(),
+                        request.getExtra("_tname").toString(), request.getExtra("_tname2").toString(), request.getUrl());
+                String rank = RankTool.getRank(text);
+                alumniDAO.add(teacher,rank,dataSetName);
+            }
     }
 
     @Override
@@ -69,15 +70,14 @@ public class WHUTeacherWebsitePageProcessor implements PageProcessor {
     }
 
     public static void main(String[] args) {
-        Request[] requests = new Request[400000];
+        Request[] requests = new Request[10000];
 
-        for(int i = 0; i < 400000; i++)
+        for(int i = 0; i < 10000; i++)
         {
             requests[i] = new Request(" ");
         }
 
-        //0
-        for(int i = 100000; i < teacherUrls.size(); ++i) {
+        for(int i = 0; i < teacherUrls.size(); ++i) {
 
             if(collegeNames.get(i).equals("武汉大学")) continue;
             if(teacherNames.get(i).contains("交流") || teacherNames.get(i).contains("访问")) continue;
@@ -97,7 +97,7 @@ public class WHUTeacherWebsitePageProcessor implements PageProcessor {
                     putExtra("_tname", tname).putExtra("_sname", sname).putExtra("_tname2", tname2);
             requests[i] = request;
         }
-        Spider spider = Spider.create(new WHUTeacherWebsitePageProcessor())
+        Spider spider = Spider.create(new FilterWHUTeacherWebsitePageProcessor())
                 .addRequest(requests)
                 .thread(3);
 

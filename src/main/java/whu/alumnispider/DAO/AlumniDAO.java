@@ -149,6 +149,26 @@ public class AlumniDAO {
         return -1;
     }
 
+    public int add(Teacher teacher, String rank, String tableName) {
+        try {
+            String sql = "INSERT INTO `test`.`" + tableName + "`(`collegename`,`schoolname`,`teachersetname`,`teachername`,`rank`,`website`)" + "VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, teacher.getCollegeName());
+            preparedStatement.setString(2, teacher.getSchoolName());
+            preparedStatement.setString(3, teacher.getTeacherSetName());
+            preparedStatement.setString(4, teacher.getTeacherName());
+            preparedStatement.setString(5, rank);
+            preparedStatement.setString(6, teacher.getWebsite());
+
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
     public int add(StructuredTeacher teacher) {
         try {
             String sql = "INSERT INTO `test`.`structuredteacher` (`collegename`,`teachername`,`major`,`field`,`position`,`website`)" + "VALUES (?, ?, ?, ?, ?, ?)";
