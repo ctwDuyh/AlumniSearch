@@ -1,5 +1,10 @@
 package whu.alumnispider;
 
+import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
+import cn.wanghaomiao.xpath.model.JXDocument;
+import cn.wanghaomiao.xpath.model.JXNode;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
@@ -12,10 +17,10 @@ import whu.alumnispider.parser.KeywordParser;
 import whu.alumnispider.utilities.Alumni;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +35,7 @@ public class BaiduSearchProcessor implements PageProcessor {
             "武汉水利水电学院", "葛洲坝水电工程学院","武汉测绘学院","武汉测量制图学院","湖北医学院","湖北省医学院",
             "湖北省立医学院","武汉水利电力学院"};
     private static final String[] ILLEGALWORDS = {"违纪","违法"};
-    private static final String[] PERSONILLEGALWORDS = {"涉嫌严重","因严重"};
+    private static final String[] PERSONILLEGALWORDS = {"涉嫌","因"};
 
 
     @Override
@@ -67,6 +72,9 @@ public class BaiduSearchProcessor implements PageProcessor {
                 Request request = new Request(tempPage);
                 page.addTargetRequest(request);
             }
+            // 该页面不用爬取
+            if (personPages.size()>0)
+                return;
         }
         if (isPersonRelated2Whu(page)){
             getInformation(page);
@@ -77,7 +85,7 @@ public class BaiduSearchProcessor implements PageProcessor {
         }
 
     }
-
+    // 判断人物是否与武大有关，并保存网址和匹配的关键词
     private boolean isPersonRelated2Whu(Page page){
 
         String entryTextXpath = "//dd/allText()";
@@ -85,28 +93,31 @@ public class BaiduSearchProcessor implements PageProcessor {
         // 寻找当前目录是否与武大有关
         Selectable personWord;
         List<String> personWords = new ArrayList<String>();
+        String schoolName;
+        String url = page.getUrl().toString();
         // 先检索词条信息
         personWord = page.getHtml().xpath(entryTextXpath);
         personWords = personWord.all();
-        if (isWordRelated2Whu(personWords)){
-            // test
+        schoolName = getWordRelated2Whu(personWords);
+        if (schoolName!=null){
             //System.out.println("人物词条匹配成功");
-            String url = page.getUrl().toString();
             System.out.println("匹配成功的网址为:"+url);
+            alumniDAO.addWebsite(url,schoolName);
             return true;
         }
         else{
             // 词条不匹配，再检索人物的主要信息
             personWord = page.getHtml().xpath(mainTextXpath);
             personWords = personWord.all();
-            if (isWordRelated2Whu(personWords)){
+            schoolName = getWordRelated2Whu(personWords);
+            if (schoolName!=null){
                 //System.out.println("人物主要内容匹配成功");
-                String url = page.getUrl().toString();
                 System.out.println("匹配成功的网址为:"+url);
+                alumniDAO.addWebsite(url,schoolName);
                 return true;
             }
         }
-
+        alumniDAO.addWebsite(url, null);
         return false;
     }
 
@@ -119,13 +130,13 @@ public class BaiduSearchProcessor implements PageProcessor {
         return isWordRelated2Illegal(personWords);
     }
 
-    private boolean isWordRelated2Whu(List<String> personWords){
+    private String getWordRelated2Whu(List<String> personWords){
         for (String schoolName : SCHOOLNAME){
             for (String word : personWords)
                 if (word.contains(schoolName))
-                    return true;
+                    return schoolName;
         }
-        return false;
+        return null;
     }
 
     private boolean isWordRelated2Illegal(List<String> personWords){
@@ -150,6 +161,10 @@ public class BaiduSearchProcessor implements PageProcessor {
         String website;
         String picture;
         String content;
+        String label;
+        String briefIntro;
+        String mainContent;
+        Timestamp time;
 
         Alumni person = new Alumni();
         Html html = page.getHtml();
@@ -159,6 +174,10 @@ public class BaiduSearchProcessor implements PageProcessor {
         website = page.getUrl().toString();
         picture = getPersonPicture(html);
         content = getPersonContent(html);
+        label = getLabel(html);
+        briefIntro = getBriefIntro(html);
+        mainContent = getMainContent(html);
+        time = getTime();
 
         System.out.println("人物姓名："+personName+", 人物信息："+personJob+", 人物图片："+picture);
         if (isIllegal){
@@ -170,6 +189,12 @@ public class BaiduSearchProcessor implements PageProcessor {
         person.setWebsite(website);
         person.setPicture(picture);
         person.setContent(content);
+        person.setLabel(label);
+        person.setMainContent(mainContent);
+        person.setBriefIntro(briefIntro);
+        person.setTime(time);
+
+
         alumniDAO.add(person,tableName);
     }
 
@@ -268,6 +293,79 @@ public class BaiduSearchProcessor implements PageProcessor {
         return content;
     }
 
+    private String getLabel(Html html){
+        Selectable labelPage;
+        String label;
+        String labelXpath = "//div[@id='open-tag']/dd[@id='open-tag-item']/allText()";
+
+        labelPage = html.xpath(labelXpath);
+        label = labelPage.toString();
+        return label;
+    }
+
+    private Timestamp getTime(){
+        Date date = new Date();
+        return new Timestamp(date.getTime());
+    }
+
+    private String getBriefIntro(Html html){
+        Selectable briefIntroPage;
+        String briefIntro = "";
+        List<String> briefIntroList;
+        String briefIntroXpath="//div[@class='lemma-summary']/div[@class='para']/allText()";
+
+        briefIntroPage = html.xpath(briefIntroXpath);
+        briefIntroList = briefIntroPage.all();
+        for (String str : briefIntroList){
+            briefIntro = briefIntro + str;
+        }
+        return briefIntro;
+    }
+
+    private String getMainContent(Html html){
+        Selectable mainContentPage;
+        String mainContentXpath = "//div[@class='main-content']";
+        mainContentPage = html.xpath(mainContentXpath);
+        String mainContent = mainContentPage.toString();
+        /*
+        String outOfSummaryPath = "<div class=\"lemma-summary\" label-module=\"lemmaSummary\">" +
+                "[\\s\\S]*?</div>\\s*?</div>([\\s\\S]*)";
+        String personMainContentPath1 = "<div class=\"para-title level-2\"[\\s\\S]*<div class=\"para\" label-module=\"para\">[\\s\\S]*?</div>";
+        String personMainContentPath2 = "<div class=\"para\" label-module=\"para\">[\\s\\S]*?</div>(?:<div class=\"para\" label-module=\"para\">[\\s\\S]*?</div>)*";
+
+        Pattern outOfSumPattern = Pattern.compile(outOfSummaryPath);
+        Pattern mainContentPattern1 = Pattern.compile(personMainContentPath1);
+        Pattern mainContentPattern2 = Pattern.compile(personMainContentPath2);
+
+        Matcher m = outOfSumPattern.matcher(mainContent);
+        // 去除简介
+        if (m.find()){
+            mainContent = m.group(1);
+        }
+        // 获取正文
+        m = mainContentPattern1.matcher(mainContent);
+        if (m.find()){
+            mainContent = m.group(0);
+        }else {
+            m = mainContentPattern2.matcher(mainContent);
+            if (m.find()){
+                mainContent = m.group(0);
+            }
+        }
+        // 转换成document
+        Document document = Jsoup.parse(mainContent);
+        JXDocument jxDocument = new JXDocument(document);
+        List<JXNode> jxNodes = new ArrayList<>();
+        try {
+            jxNodes = jxDocument.selN("./allText()");
+        } catch (XpathSyntaxErrorException e) {
+            e.printStackTrace();
+        }
+        mainContent = jxNodes.get(0).toString();
+        */
+        return mainContent;
+    }
+
     // 用于职业匹配模式三
     private String getMatching(String soap,String[] rgexs){
         for (String rgex : rgexs){
@@ -308,6 +406,7 @@ public class BaiduSearchProcessor implements PageProcessor {
     public static void main(String[] args) {
 
         //searchNameList = Arrays.asList("张德明");
+        /*
         searchNameList = alumniDAO.getCandidate();
 
         List<String> urls = new ArrayList<>();
@@ -316,8 +415,10 @@ public class BaiduSearchProcessor implements PageProcessor {
         }
         String[] urlArray = new String[urls.size()];
         urls.toArray(urlArray);
+        */
+
         Spider.create(new BaiduSearchProcessor())
-                .addUrl(urlArray)
+                .addUrl("https://baike.baidu.com/item/%E5%88%98%E4%BC%A0%E9%93%81")
                 .thread(3)
                 .run();
 

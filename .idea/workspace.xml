@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e8d33293-259f-40ad-aade-bdea10436364" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/code.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/code.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/code/whu/alumnispider/DAO/AlumniDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchAddProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchAddProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Alumni.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/whu/alumnispider/utilities/Alumni.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +80,7 @@
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1574667733169" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="ignore_missing_gitignore" value="true" />
-    <property name="last_opened_file_path" value="E:/实验室项目/仓库管理/RD406v2.0/中文版/演示软件/java/testdemo" />
+    <property name="last_opened_file_path" value="E:/实验室项目/校友会/jsoup" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -201,6 +207,31 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@cb09cfc9" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@cb09cfc9" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@123a3039" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+            <path>
+              <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceGroupNode@cb09cfc9" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              <item name="com.intellij.execution.services.ServiceModel$ServiceNode@3d755e99" type="9fbbdea:ServiceModel$ServiceNode" />
+            </path>
+          </expand>
+          <select />
+        </treeState>
+      </serviceView>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -251,6 +282,18 @@
       <workItem from="1575873035560" duration="8029000" />
       <workItem from="1575942828209" duration="5087000" />
       <workItem from="1575959524938" duration="3219000" />
+      <workItem from="1575965814734" duration="5012000" />
+      <workItem from="1576028486615" duration="7715000" />
+      <workItem from="1576046520683" duration="12036000" />
+      <workItem from="1576115433140" duration="3324000" />
+      <workItem from="1576132522828" duration="5804000" />
+      <workItem from="1576201502908" duration="5731000" />
+      <workItem from="1576219650752" duration="9810000" />
+      <workItem from="1576462824164" duration="5016000" />
+      <workItem from="1576478331395" duration="10263000" />
+      <workItem from="1576548001434" duration="5763000" />
+      <workItem from="1576564904945" duration="10201000" />
+      <workItem from="1576634219271" duration="1970000" />
     </task>
     <task id="LOCAL-00001" summary="versionv1.0">
       <created>1575516363135</created>
@@ -302,6 +345,16 @@
           <url>file://$PROJECT_DIR$/src/main/java/whu/alumnispider/GovWebsitePageProcessor.java</url>
           <line>130</line>
           <option name="timeStamp" value="84" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/whu/alumnispider/BaiduSearchAddProcessor.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/whu/alumnispider/DAO/AlumniDAO.java</url>
+          <line>257</line>
+          <option name="timeStamp" value="87" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,5 +1,8 @@
 package whu.alumnispider.utilities;
 
+import java.sql.Timestamp;
+
+
 public class Alumni {
     private String name;
     private String job;
@@ -7,6 +10,10 @@ public class Alumni {
     private String website;
     private String picture;
     private String content;
+    private String label;
+    private String mainContent;
+    private String briefIntro;
+    private Timestamp time;
 
     public String getName() {
         return name;
@@ -54,5 +61,37 @@ public class Alumni {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getMainContent() {
+        return mainContent;
+    }
+
+    public void setMainContent(String mainContent) {
+        this.mainContent = mainContent;
+    }
+
+    public String getBriefIntro() {
+        return briefIntro;
+    }
+
+    public void setBriefIntro(String briefIntro) {
+        this.briefIntro = briefIntro;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 }

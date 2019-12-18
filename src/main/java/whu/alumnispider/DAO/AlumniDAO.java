@@ -2,6 +2,7 @@ package whu.alumnispider.DAO;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import whu.alumnispider.utilities.*;
@@ -118,7 +119,8 @@ public class AlumniDAO {
 
     public int add(Alumni alumni, String tableName) {
         try {
-            String sql = "INSERT INTO `test`.`" + tableName + "`(`name`, `job`,`illegal`,`website`,`picture`,`content`)" + "VALUES (?, ?,?,?,?,?)";
+            String sql = "INSERT INTO `test`.`" + tableName + "`(`name`, `job`,`illegal`,`website`,`picture`," +
+                    "`content`,`label`,`main_content`,`brief_intro`,`time`)" + "VALUES (?, ?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setString(1, alumni.getName());
@@ -127,6 +129,10 @@ public class AlumniDAO {
             preparedStatement.setString(4,alumni.getWebsite());
             preparedStatement.setString(5,alumni.getPicture());
             preparedStatement.setString(6,alumni.getContent());
+            preparedStatement.setString(7,alumni.getLabel());
+            preparedStatement.setString(8,alumni.getMainContent());
+            preparedStatement.setString(9,alumni.getBriefIntro());
+            preparedStatement.setTimestamp(10,alumni.getTime());
 
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -182,7 +188,7 @@ public class AlumniDAO {
     public List<String> getWebsite(){
         try {
             List<String> rets = new ArrayList<>();
-            String sql = "SELECT website FROM `alumnis` WHERE content is NULL";
+            String sql = "SELECT website FROM `alumnis` WHERE `time` is NULL";
             ResultSet resultSet = stmt.executeQuery(sql);
             while (resultSet.next()) {
                 String ret = resultSet.getString(1);
@@ -209,6 +215,24 @@ public class AlumniDAO {
         return -1;
     }
 
+    public int updateContent2(String label,String mainContent, String briefIntro, Timestamp time,String website){
+        try{
+            String sql = "UPDATE `alumnis` SET `label` = ?,`main_content` = ?,`brief_intro` = ?,`time` = ? WHERE `website` = ?";
+            PreparedStatement preparedStatement  = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1,label);
+            preparedStatement.setString(2,mainContent);
+            preparedStatement.setString(3,briefIntro);
+            preparedStatement.setTimestamp(4,time);
+            preparedStatement.setString(5,website);
+            return preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+
     public int addName(String name,String table){
         try {
             String sql = "INSERT INTO `" + table + "`(`name`,`state`) values(?,1) ";
@@ -220,4 +244,80 @@ public class AlumniDAO {
         }
         return -1;
     }
+
+    public int addWebsite(String website,String name){
+        try{
+            String sql = "INSERT INTO `websites` (`website`,`schoolname`) values(?,?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1,website);
+            preparedStatement.setString(2,name);
+            return preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int insertPictureId(String picture){
+        try{
+            String insertSql = "INSERT INTO `picture` (`picture`) SELECT ? FROM DUAL WHERE NOT EXISTS (SELECT `picture` FROM `picture` WHERE `picture` = ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(insertSql);
+            preparedStatement.setString(1,picture);
+            preparedStatement.setString(2,picture);
+            preparedStatement.executeUpdate();
+            String sql = "SELECT LAST_INSERT_ID()";
+            ResultSet resultSet = stmt.executeQuery(sql);
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int getPictureId(String picture){
+        try{
+            String sql = "SELECT `id` FROM `picture` WHERE `isSave` = 0 AND `picture` = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1,picture);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public List<String> getPictures(){
+        List<String> pictures = new ArrayList<>();
+        try{
+            String sql = "SELECT `picture` FROM `alumnis` WHERE `picture` is not null AND `picture` not in (SELECT `picture` FROM `picture` WHERE `isSave` = 1)";
+
+            ResultSet resultSet = stmt.executeQuery(sql);
+            while (resultSet.next()){
+                pictures.add(resultSet.getString(1));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pictures;
+    }
+
+    public void updatePictureSave(int id){
+        try{
+            String sql = "UPDATE `picture` SET `isSave` = 1 WHERE `id` = ? ";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1,id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

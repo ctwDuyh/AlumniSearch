@@ -29,5 +29,20 @@
         <jarDirectory url="file://E:/实验室项目/校友会/5.1.6" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://E:/实验室项目/校友会/jsoup" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://E:/实验室项目/校友会/jsoup/jsoup-1.11.2-javadoc" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="file://E:/实验室项目/校友会/jsoup" />
+        </SOURCES>
+        <jarDirectory url="file://E:/实验室项目/校友会/jsoup" recursive="false" />
+        <jarDirectory url="file://E:/实验室项目/校友会/jsoup" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>
