@@ -15,6 +15,7 @@ import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
 import whu.alumnispider.tool.HrefTool;
+import whu.alumnispider.tool.UrlTool;
 import whu.alumnispider.utilities.Teacher;
 
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
     private static String teacherSetXpath7 = "//a[allText() ~= \'.*教员.*\']";
     private static String teacherSetXpath8 = "//a[allText() ~= \'.*教授.*\']";
     private static String teacherSetXpath9 = "//a[allText() ~= \'.*博士.*\']";
+    private static String teacherSetXpath14 = "//a[allText() ~= \'.*研究.*\']";
+    private static String teacherSetXpath15 = "//a[allText() ~= \'.*学科.*\']";
+    private static String teacherSetXpath16 = "//a[allText() ~= \'.*人才.*\']";
     private static String teacherSetXpath10 = "//a[allText() ~= \'.*院.*\']/@href";
     private static String teacherSetXpath11 = "//a[allText() ~= \'.*系.*\']/@href";
     private static String teacherSetXpath12 = "//a[allText() ~= \'.*部.*\']/@href";
@@ -75,6 +79,9 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
             jxNodes.addAll(jxDocument.selN(teacherSetXpath11));
             jxNodes.addAll(jxDocument.selN(teacherSetXpath12));
             jxNodes.addAll(jxDocument.selN(teacherSetXpath13));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath14));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath15));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath16));
         } catch (XpathSyntaxErrorException e) {
             e.printStackTrace();
         }
@@ -166,7 +173,6 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
             if(!teachers.contains(teacher)&&addTeacher)
             {
                 teachers.add(teacher);
-                if(!teacher.getWebsite().startsWith(page.getUrl().toString().substring(0,page.getUrl().toString().indexOf(".edu.cn")+7))) return;
                 alumniDAO.add(teacher,dataSetName);
             }
         }
@@ -221,9 +227,7 @@ public class TeacherWebsitePageProcessor implements PageProcessor {
         for(int i = 10000; i < teacherSetUrls.size(); ++i) {
 
             String url = teacherSetUrls.get(i);
-            if(url.endsWith(".cn")) url += "/";
-
-            if(!url.startsWith("http")) url = "http://" + url;
+            url = UrlTool.getPreparedUrl(url);
 
             String cname = collegeNames.get(i);
             String sname = schoolNames.get(i);

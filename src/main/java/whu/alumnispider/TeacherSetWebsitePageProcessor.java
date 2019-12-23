@@ -15,6 +15,7 @@ import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
 import whu.alumnispider.tool.HrefTool;
+import whu.alumnispider.tool.UrlTool;
 import whu.alumnispider.utilities.TeacherSet;
 
 import java.util.ArrayList;
@@ -45,11 +46,14 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
     private static String teacherSetXpath2 = "//a[allText() ~= \'.*教师.*\']";
     private static String teacherSetXpath3 = "//a[allText() ~= \'.*人物.*\']";
     private static String teacherSetXpath4 = "//a[allText() ~= \'.*队伍.*\']";
-    private static String teacherSetXpath5 = "//a[allText() ~= \'.*系列.*\']";
+    private static String teacherSetXpath5 = "//a[allText() ~= \'.*系.*\']";
     private static String teacherSetXpath6 = "//a[allText() ~= \'.*人员.*\']";
     private static String teacherSetXpath7 = "//a[allText() ~= \'.*教员.*\']";
     private static String teacherSetXpath8 = "//a[allText() ~= \'.*教授.*\']";
     private static String teacherSetXpath9 = "//a[allText() ~= \'.*博士.*\']";
+    private static String teacherSetXpath10 = "//a[allText() ~= \'.*学科.*\']";
+    private static String teacherSetXpath11 = "//a[allText() ~= \'.*研究*\']";
+    private static String teacherSetXpath12 = "//a[allText() ~= \'.*人才*\']";
 
     static Set<TeacherSet> extras = new HashSet<TeacherSet>();
 
@@ -72,6 +76,9 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
             jxNodes.addAll(jxDocument.selN(teacherSetXpath7));
             jxNodes.addAll(jxDocument.selN(teacherSetXpath8));
             jxNodes.addAll(jxDocument.selN(teacherSetXpath9));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath10));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath11));
+            jxNodes.addAll(jxDocument.selN(teacherSetXpath12));
         } catch (XpathSyntaxErrorException e) {
             e.printStackTrace();
         }
@@ -165,9 +172,7 @@ public class TeacherSetWebsitePageProcessor implements PageProcessor {
         for(int i = 8000; i < 8800; ++i) {
 
             String url = schoolUrls.get(i);
-            if(url.endsWith(".cn")) url += "/";
-
-            if(!url.startsWith("http")) url = "http://" + url;
+            url = UrlTool.getPreparedUrl(url);
 
             String cname = collegeNames.get(i);
             String sname = schoolNames.get(i);

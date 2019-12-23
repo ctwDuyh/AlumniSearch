@@ -12,6 +12,7 @@ import whu.alumnispider.DAO.AlumniDAO;
 import whu.alumnispider.downloader.BetterDownloader;
 import whu.alumnispider.site.MySite;
 import whu.alumnispider.tool.HrefTool;
+import whu.alumnispider.tool.UrlTool;
 import whu.alumnispider.utilities.School;
 
 
@@ -211,9 +212,7 @@ public class SchoolWebsitePageProcessor implements PageProcessor {
             }
 
             String url = collegeUrls.get(i);
-            if(url.endsWith(".cn")) url += "/";
-
-            if(!url.startsWith("http")) url = "http://" + url;
+            url = UrlTool.getPreparedUrl(url);
 
             Matcher schoolMatcher = schoolPattern.matcher(url);
             if(!schoolMatcher.find()) {

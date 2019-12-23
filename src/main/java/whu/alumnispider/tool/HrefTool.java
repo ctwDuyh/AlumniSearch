@@ -4,7 +4,8 @@ public class HrefTool {
     public static String getHref(String href, String parent, String processUrl)
     {
         href.trim();
-        if(href.startsWith("http")|| href.startsWith("www")) return href;
+        if(href.startsWith("http")|| href.startsWith("www")) return UrlTool.getPreparedUrl(href);
+        if(href.startsWith("www"))
         if(href.charAt(0) == '/')
         {
             return parent + href.substring(1);
